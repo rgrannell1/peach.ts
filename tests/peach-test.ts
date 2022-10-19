@@ -186,3 +186,16 @@ Deno.test({
     }
   },
 });
+
+Deno.test({
+  name: "Object.from | Runs",
+  fn() {
+    const gen = Peach.Object.from(
+      Peach.Number.uniform(0, 1000),
+      Peach.Number.uniform(0, 1000),
+      Peach.Number.uniform(0, 100),
+    )
+
+    const val = gen();
+  },
+});

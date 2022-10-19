@@ -9,3 +9,4 @@ export * as Logic from "./logic/logic.ts";
 export * as Number from "./number/number.ts";
 export * as Set from "./set/set.ts";
 export * as String from "./string/string.ts";
+export * as Object from "./object/object.ts";
