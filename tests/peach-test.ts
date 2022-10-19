@@ -3,21 +3,21 @@ import {
   assertEquals,
 } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
-import { K } from "../src/module.ts";
-
 import * as NumberGen from "../src/number/number.ts";
 import * as ArrayGen from "../src/array/array.ts";
 import * as SetGen from "../src/set/set.ts";
 import * as StringGen from "../src/string/string.ts";
 import * as Logic from "../src/logic/logic.ts";
 
+import * as Peach from '../src/mod.ts';
+
 Deno.test({
   name: "K | Constant-function returns same value supplied",
   fn() {
     for (let idx = 0; idx < 1_000; idx++) {
-      const val = NumberGen.uniform(0, 100);
+      const val = Peach.Number.uniform(0, 100);
 
-      if (K(val)() !== val) {
+      if (Peach.K(val)() !== val) {
         throw new Error("value not equal");
       }
     }
@@ -27,18 +27,18 @@ Deno.test({
 Deno.test({
   name: "Uniform | Choosing 0...0 returns 0",
   fn() {
-    assertEquals(NumberGen.uniform(0, 0)(), 0, "uniform 0...0 must be zero");
+    assertEquals(Peach.Number.uniform(0, 0)(), 0, "uniform 0...0 must be zero");
   },
 });
 
 Deno.test({
   name: "Uniform | Always in range",
   fn() {
-    let upper = NumberGen.uniform(0, 10);
+    let upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
       let sizeTgt = upper();
-      let random = NumberGen.uniform(0, sizeTgt);
+      let random = Peach.Number.uniform(0, sizeTgt);
       let val = random();
 
       if (val < 0 || val > sizeTgt) {
