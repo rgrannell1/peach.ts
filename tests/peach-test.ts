@@ -3,11 +3,6 @@ import {
   assertEquals,
 } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
-import * as NumberGen from "../src/number/number.ts";
-import * as ArrayGen from "../src/array/array.ts";
-import * as SetGen from "../src/set/set.ts";
-import * as StringGen from "../src/string/string.ts";
-import * as Logic from "../src/logic/logic.ts";
 
 import * as Peach from '../src/mod.ts';
 
@@ -52,7 +47,7 @@ Deno.test({
   name: "UniformContinuous | Choosing 0...0 returns 0",
   fn() {
     assertEquals(
-      NumberGen.uniformContinuous(0, 0)(),
+      Peach.Number.uniformContinuous(0, 0)(),
       0,
       "uniform 0...0 must be zero",
     );
@@ -62,11 +57,11 @@ Deno.test({
 Deno.test({
   name: "UniformContinous | Always in range",
   fn() {
-    let upper = NumberGen.uniform(0, 10);
+    let upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
       let sizeTgt = upper();
-      let random = NumberGen.uniformContinuous(0, sizeTgt);
+      let random = Peach.Number.uniformContinuous(0, sizeTgt);
       let val = random();
 
       if (val < 0 || val > sizeTgt) {
@@ -79,11 +74,11 @@ Deno.test({
 Deno.test({
   name: "Array.from | constructs expected size",
   fn() {
-    let upper = NumberGen.uniform(0, 10);
+    let upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
       let sizeTgt = upper();
-      let random = ArrayGen.from(0, sizeTgt);
+      let random = Peach.Array.from(0, sizeTgt);
       let val = random();
 
       if (val.length > sizeTgt) {
@@ -97,7 +92,7 @@ Deno.test({
   name: "OneOf | Fails for empty collections",
   fn() {
     try {
-      Logic.oneOf(NumberGen.uniform, [])();
+      Peach.Logic.oneOf(Peach.Number.uniform, [])();
     } catch (err) {
       if (err.message.includes('Cannot retrieve value from empty collection')) {
         return
@@ -114,7 +109,7 @@ Deno.test({
 Deno.test({
   name: "Set.from | Constructs set of expected size",
   fn() {
-    const gen = SetGen.from(1, NumberGen.uniform(1, 100));
+    const gen = Peach.Set.from(1, Peach.Number.uniform(1, 100));
 
     for (let idx = 0; idx < 1000; idx++) {
       const val = gen()
@@ -129,11 +124,11 @@ Deno.test({
 Deno.test({
   name: "String.from | Constructs string of expected size",
   fn() {
-    let upper = NumberGen.uniform(0, 10);
+    let upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
       let sizeTgt = upper();
-      let random = StringGen.from('a', sizeTgt);
+      let random = Peach.String.from('a', sizeTgt);
       let val = random();
 
       if (val.length > sizeTgt) {
@@ -142,3 +137,40 @@ Deno.test({
     }
   },
 });
+
+Deno.test({
+  name: "String.digit | Construct a single digit",
+  fn() {
+    let upper = Peach.Number.uniform(0, 10);
+
+    for (let idx = 0; idx < 1_000; idx++) {
+      let sizeTgt = upper();
+      let random = Peach.String.digit(Peach.Number.uniform);
+      let val = random();
+
+      if (val.length > 1) {
+        throw new Error('too many digits returned')
+      }
+    }
+  },
+});
+
+
+Deno.test({
+  name: "String.nonZeroDigit | Construct a single digit",
+  fn() {
+    let upper = Peach.Number.uniform(0, 10);
+
+    for (let idx = 0; idx < 1_000; idx++) {
+      let sizeTgt = upper();
+      let random = Peach.String.nonZeroDigit(Peach.Number.uniform);
+      let val = random();
+
+      if (val.length > 1) {
+        throw new Error('too many digits returned')
+      }
+    }
+  },
+});
+
+

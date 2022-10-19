@@ -1,4 +1,4 @@
-import type { Wrapped, Thunk } from "../types.ts";
+import type { Wrapped, Thunk, Density } from "../types.ts";
 import { unwrap } from "../types.ts";
 
 export function from(
@@ -15,4 +15,16 @@ export function from(
 
     return parts.join("");
   };
+}
+
+export function digit(density: Density) {
+  return (): string => {
+    return `${ unwrap(density(0, 10)) }`
+  }
+}
+
+export function nonZeroDigit(density: Density) {
+  return (): string => {
+    return `${ unwrap(density(1, 10)) }`
+  }
 }
