@@ -3,8 +3,7 @@ import {
   assertEquals,
 } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
-
-import * as Peach from '../src/mod.ts';
+import * as Peach from "../src/mod.ts";
 
 Deno.test({
   name: "K | Constant-function returns same value supplied",
@@ -94,15 +93,15 @@ Deno.test({
     try {
       Peach.Logic.oneOf(Peach.Number.uniform, [])();
     } catch (err) {
-      if (err.message.includes('Cannot retrieve value from empty collection')) {
-        return
+      if (err.message.includes("Cannot retrieve value from empty collection")) {
+        return;
       } else {
-        throw err
+        throw err;
       }
       return;
     }
 
-    throw new Error('failed to fail!')
+    throw new Error("failed to fail!");
   },
 });
 
@@ -112,14 +111,13 @@ Deno.test({
     const gen = Peach.Set.from(1, Peach.Number.uniform(1, 100));
 
     for (let idx = 0; idx < 1000; idx++) {
-      const val = gen()
+      const val = gen();
       if (val.size !== 1) {
-        throw new Error('set too big')
+        throw new Error("set too big");
       }
     }
   },
 });
-
 
 Deno.test({
   name: "String.from | Constructs string of expected size",
@@ -128,7 +126,7 @@ Deno.test({
 
     for (let idx = 0; idx < 1_000; idx++) {
       let sizeTgt = upper();
-      let random = Peach.String.from('a', sizeTgt);
+      let random = Peach.String.from("a", sizeTgt);
       let val = random();
 
       if (val.length > sizeTgt) {
@@ -149,12 +147,11 @@ Deno.test({
       let val = random();
 
       if (val.length > 1) {
-        throw new Error('too many digits returned')
+        throw new Error("too many digits returned");
       }
     }
   },
 });
-
 
 Deno.test({
   name: "String.nonZeroDigit | Construct a single digit",
@@ -167,10 +164,25 @@ Deno.test({
       let val = random();
 
       if (val.length > 1) {
-        throw new Error('too many digits returned')
+        throw new Error("too many digits returned");
       }
     }
   },
 });
 
 
+Deno.test({
+  name: "String.newline | Returns expected characters",
+  fn() {
+
+    assertEquals( Peach.String.unixNewline()(), '\n')
+    assertEquals( Peach.String.windowsNewline()(), '\r\n')
+
+    const gen = Peach.String.newline(Peach.Number.uniform);
+    const char = gen()
+
+    if (char !== '\n' && char !== '\r\n') {
+      throw new Error('unexpected return character');
+    }
+  },
+});
