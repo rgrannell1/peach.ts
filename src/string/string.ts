@@ -41,6 +41,6 @@ export function windowsNewline() {
 
 export function newline(density: Density): Thunk<string> {
   return () => {
-    return Logic.oneOf(density, [ '\n', '\r\n' ])();
-  }
+    return Logic.oneOf(density, ["\n", "\r\n"])();
+  };
 }

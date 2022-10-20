@@ -170,19 +170,17 @@ Deno.test({
   },
 });
 
-
 Deno.test({
   name: "String.newline | Returns expected characters",
   fn() {
-
-    assertEquals( Peach.String.unixNewline()(), '\n')
-    assertEquals( Peach.String.windowsNewline()(), '\r\n')
+    assertEquals(Peach.String.unixNewline()(), "\n");
+    assertEquals(Peach.String.windowsNewline()(), "\r\n");
 
     const gen = Peach.String.newline(Peach.Number.uniform);
-    const char = gen()
+    const char = gen();
 
-    if (char !== '\n' && char !== '\r\n') {
-      throw new Error('unexpected return character');
+    if (char !== "\n" && char !== "\r\n") {
+      throw new Error("unexpected return character");
     }
   },
 });
@@ -194,8 +192,22 @@ Deno.test({
       Peach.Number.uniform(0, 1000),
       Peach.Number.uniform(0, 1000),
       Peach.Number.uniform(0, 100),
-    )
+    );
 
     const val = gen();
+  },
+});
+
+Deno.test({
+  name: "Boolean.truth | Returns true",
+  fn() {
+    assertEquals(Peach.Boolean.truth()(), true);
+  },
+});
+
+Deno.test({
+  name: "Boolean.falsity | Returns false",
+  fn() {
+    assertEquals(Peach.Boolean.falsity()(), false);
   },
 });
