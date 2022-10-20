@@ -4,6 +4,11 @@ import {
 } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
 import * as Peach from "../src/mod.ts";
+import {
+  LETTERS,
+  LOWERCASE_LETTERS,
+  UPPERCASE_LETTERS,
+} from "../src/constants.ts";
 
 Deno.test({
   name: "K | Constant-function returns same value supplied",
@@ -215,35 +220,46 @@ Deno.test({
 Deno.test({
   name: "String.space | Returns space",
   fn() {
-    assertEquals(Peach.String.space()(), ' ');
+    assertEquals(Peach.String.space()(), " ");
   },
 });
 
 Deno.test({
   name: "String.tab | Returns tab",
   fn() {
-    assertEquals(Peach.String.tab()(), '\t');
+    assertEquals(Peach.String.tab()(), "\t");
   },
 });
 
 Deno.test({
   name: "String.lowercaseLetters | runs without error",
   fn() {
-    Peach.String.lowercaseLetters(Peach.Number.uniform)();
+    for (let idx = 0; idx < 1_000; idx++) {
+      const letter = Peach.String.lowercaseLetters(Peach.Number.uniform)();
+      assertEquals(letter.length, 1);
+      assert(LOWERCASE_LETTERS.includes(letter));
+    }
   },
 });
 
 Deno.test({
   name: "String.uppercaseLetters | runs without error",
   fn() {
-    Peach.String.uppercaseLetters(Peach.Number.uniform)();
+    for (let idx = 0; idx < 1_000; idx++) {
+      const letter = Peach.String.uppercaseLetters(Peach.Number.uniform)();
+      assertEquals(letter.length, 1);
+      assert(UPPERCASE_LETTERS.includes(letter));
+    }
   },
 });
-
 
 Deno.test({
   name: "String.letters | runs without error",
   fn() {
-    Peach.String.letters(Peach.Number.uniform)();
+    for (let idx = 0; idx < 1_000; idx++) {
+      const letter = Peach.String.letters(Peach.Number.uniform)();
+      assertEquals(letter.length, 1);
+      assert(LETTERS.includes(letter));
+    }
   },
 });

@@ -1,7 +1,8 @@
 import type { Density, Thunk, Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
-
 import * as Logic from "../logic/logic.ts";
+
+import { LETTERS, LOWERCASE_LETTERS, UPPERCASE_LETTERS } from "../constants.ts";
 
 export function from(
   val: Wrapped<string>,
@@ -46,15 +47,19 @@ export function newline(density: Density): Thunk<string> {
 }
 
 export function space(): Thunk<string> {
-  return () => ' ';
+  return () => " ";
 }
 export function tab(): Thunk<string> {
-  return () => '\t';
+  return () => "\t";
 }
 
-const LOWERCASE_LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('');
-const UPPERCASE_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-const LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+export function hyphen(): Thunk<string> {
+  return () => "-";
+}
+
+export function underscore(): Thunk<string> {
+  return () => "_";
+}
 
 export function lowercaseLetters(density: Density): Thunk<string> {
   return Logic.oneOf(density, LOWERCASE_LETTERS);
