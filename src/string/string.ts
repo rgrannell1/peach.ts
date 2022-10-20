@@ -44,3 +44,26 @@ export function newline(density: Density): Thunk<string> {
     return Logic.oneOf(density, ["\n", "\r\n"])();
   };
 }
+
+export function space(): Thunk<string> {
+  return () => ' ';
+}
+export function tab(): Thunk<string> {
+  return () => '\t';
+}
+
+const LOWERCASE_LETTERS = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const UPPERCASE_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+export function lowercaseLetters(density: Density): Thunk<string> {
+  return Logic.oneOf(density, LOWERCASE_LETTERS);
+}
+
+export function uppercaseLetters(density: Density): Thunk<string> {
+  return Logic.oneOf(density, UPPERCASE_LETTERS);
+}
+
+export function letters(density: Density): Thunk<string> {
+  return Logic.oneOf(density, LETTERS);
+}

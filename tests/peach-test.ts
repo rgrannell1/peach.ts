@@ -211,3 +211,39 @@ Deno.test({
     assertEquals(Peach.Boolean.falsity()(), false);
   },
 });
+
+Deno.test({
+  name: "String.space | Returns space",
+  fn() {
+    assertEquals(Peach.String.space()(), ' ');
+  },
+});
+
+Deno.test({
+  name: "String.tab | Returns tab",
+  fn() {
+    assertEquals(Peach.String.tab()(), '\t');
+  },
+});
+
+Deno.test({
+  name: "String.lowercaseLetters | runs without error",
+  fn() {
+    Peach.String.lowercaseLetters(Peach.Number.uniform)();
+  },
+});
+
+Deno.test({
+  name: "String.uppercaseLetters | runs without error",
+  fn() {
+    Peach.String.uppercaseLetters(Peach.Number.uniform)();
+  },
+});
+
+
+Deno.test({
+  name: "String.letters | runs without error",
+  fn() {
+    Peach.String.letters(Peach.Number.uniform)();
+  },
+});
