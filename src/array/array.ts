@@ -17,3 +17,9 @@ export function from<T>(elem: Wrapped<T>, size: Wrapped<number>): Thunk<T[]> {
     return elems;
   };
 }
+
+export function concat<T>(...elems: Wrapped<T>[]): Thunk<T[]> {
+  return () => {
+    return elems.map(elem => unwrap(elem));
+  };
+}

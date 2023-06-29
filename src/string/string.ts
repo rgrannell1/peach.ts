@@ -73,6 +73,12 @@ export function letters(density: Density): Thunk<string> {
   return Logic.oneOf(density, LETTERS);
 }
 
+export function concat(...strings: Wrapped<string>[]): Thunk<string> {
+  return () => {
+    return strings.map(str => unwrap(str)).join("");
+  };
+}
+
 import UnicodeRanges from "https://raw.githubusercontent.com/radiovisual/unicode-range-json/master/unicode-ranges.json" assert {
   type: 'json'
 }
@@ -100,257 +106,263 @@ function UnicodeCategory(category: string) {
   }
 }
 
-export const ControlCharacter = UnicodeCategory("Control Character")
-export const BasicLatin = UnicodeCategory("Basic Latin")
-export const Latin1Supplement = UnicodeCategory("Latin-1 Supplement")
-export const LatinExtendedA = UnicodeCategory("Latin Extended-A")
-export const LatinExtendedB = UnicodeCategory("Latin Extended-B")
-export const IpaExtensions = UnicodeCategory("IPA Extensions")
-export const SpacingModifierLetters = UnicodeCategory("Spacing Modifier Letters")
-export const CombiningDiacriticalMarks = UnicodeCategory("Combining Diacritical Marks")
-export const GreekAndCoptic = UnicodeCategory("Greek and Coptic")
-export const Cyrillic = UnicodeCategory("Cyrillic")
-export const CyrillicSupplement = UnicodeCategory("Cyrillic Supplement")
-export const Armenian = UnicodeCategory("Armenian")
-export const Hebrew = UnicodeCategory("Hebrew")
-export const Arabic = UnicodeCategory("Arabic")
-export const Syriac = UnicodeCategory("Syriac")
-export const ArabicSupplement = UnicodeCategory("Arabic Supplement")
-export const Thaana = UnicodeCategory("Thaana")
-export const Nko = UnicodeCategory("NKo")
-export const Samaritan = UnicodeCategory("Samaritan")
-export const Mandaic = UnicodeCategory("Mandaic")
-export const ArabicExtendedA = UnicodeCategory("Arabic Extended-A")
-export const Devanagari = UnicodeCategory("Devanagari")
-export const Bengali = UnicodeCategory("Bengali")
-export const Gurmukhi = UnicodeCategory("Gurmukhi")
-export const Gujarati = UnicodeCategory("Gujarati")
-export const Oriya = UnicodeCategory("Oriya")
-export const Tamil = UnicodeCategory("Tamil")
-export const Telugu = UnicodeCategory("Telugu")
-export const Kannada = UnicodeCategory("Kannada")
-export const Malayalam = UnicodeCategory("Malayalam")
-export const Sinhala = UnicodeCategory("Sinhala")
-export const Thai = UnicodeCategory("Thai")
-export const Lao = UnicodeCategory("Lao")
-export const Tibetan = UnicodeCategory("Tibetan")
-export const Myanmar = UnicodeCategory("Myanmar")
-export const Georgian = UnicodeCategory("Georgian")
-export const HangulJamo = UnicodeCategory("Hangul Jamo")
-export const Ethiopic = UnicodeCategory("Ethiopic")
-export const EthiopicSupplement = UnicodeCategory("Ethiopic Supplement")
-export const Cherokee = UnicodeCategory("Cherokee")
-export const UnifiedCanadianAboriginalSyllabics = UnicodeCategory("Unified Canadian Aboriginal Syllabics")
-export const Ogham = UnicodeCategory("Ogham")
-export const Runic = UnicodeCategory("Runic")
-export const Tagalog = UnicodeCategory("Tagalog")
-export const Hanunoo = UnicodeCategory("Hanunoo")
-export const Buhid = UnicodeCategory("Buhid")
-export const Tagbanwa = UnicodeCategory("Tagbanwa")
-export const Khmer = UnicodeCategory("Khmer")
-export const Mongolian = UnicodeCategory("Mongolian")
-export const UnifiedCanadianAboriginalSyllabicsExtended = UnicodeCategory("Unified Canadian Aboriginal Syllabics Extended")
-export const Limbu = UnicodeCategory("Limbu")
-export const TaiLe = UnicodeCategory("Tai Le")
-export const NewTaiLue = UnicodeCategory("New Tai Lue")
-export const KhmerSymbols = UnicodeCategory("Khmer Symbols")
-export const Buginese = UnicodeCategory("Buginese")
-export const TaiTham = UnicodeCategory("Tai Tham")
-export const CombiningDiacriticalMarksExtended = UnicodeCategory("Combining Diacritical Marks Extended")
-export const Balinese = UnicodeCategory("Balinese")
-export const Sundanese = UnicodeCategory("Sundanese")
-export const Batak = UnicodeCategory("Batak")
-export const Lepcha = UnicodeCategory("Lepcha")
-export const OlChiki = UnicodeCategory("Ol Chiki")
-export const SundaneseSupplement = UnicodeCategory("Sundanese Supplement")
-export const VedicExtensions = UnicodeCategory("Vedic Extensions")
-export const PhoneticExtensions = UnicodeCategory("Phonetic Extensions")
-export const PhoneticExtensionsSupplement = UnicodeCategory("Phonetic Extensions Supplement")
-export const CombiningDiacriticalMarksSupplement = UnicodeCategory("Combining Diacritical Marks Supplement")
-export const LatinExtendedAdditional = UnicodeCategory("Latin Extended Additional")
-export const GreekExtended = UnicodeCategory("Greek Extended")
-export const GeneralPunctuation = UnicodeCategory("General Punctuation")
-export const SuperscriptsAndSubscripts = UnicodeCategory("Superscripts and Subscripts")
-export const CurrencySymbols = UnicodeCategory("Currency Symbols")
-export const CombiningDiacriticalMarksForSymbols = UnicodeCategory("Combining Diacritical Marks for Symbols")
-export const LetterlikeSymbols = UnicodeCategory("Letterlike Symbols")
-export const NumberForms = UnicodeCategory("Number Forms")
-export const Arrows = UnicodeCategory("Arrows")
-export const MathematicalOperators = UnicodeCategory("Mathematical Operators")
-export const MiscellaneousTechnical = UnicodeCategory("Miscellaneous Technical")
-export const ControlPictures = UnicodeCategory("Control Pictures")
-export const OpticalCharacterRecognition = UnicodeCategory("Optical Character Recognition")
-export const EnclosedAlphanumerics = UnicodeCategory("Enclosed Alphanumerics")
-export const BoxDrawing = UnicodeCategory("Box Drawing")
-export const BlockElements = UnicodeCategory("Block Elements")
-export const GeometricShapes = UnicodeCategory("Geometric Shapes")
-export const MiscellaneousSymbols = UnicodeCategory("Miscellaneous Symbols")
-export const Dingbats = UnicodeCategory("Dingbats")
-export const MiscellaneousMathematicalSymbolsA = UnicodeCategory("Miscellaneous Mathematical Symbols-A")
-export const SupplementalArrowsA = UnicodeCategory("Supplemental Arrows-A")
-export const BraillePatterns = UnicodeCategory("Braille Patterns")
-export const SupplementalArrowsB = UnicodeCategory("Supplemental Arrows-B")
-export const MiscellaneousMathematicalSymbolsB = UnicodeCategory("Miscellaneous Mathematical Symbols-B")
-export const SupplementalMathematicalOperators = UnicodeCategory("Supplemental Mathematical Operators")
-export const MiscellaneousSymbolsAndArrows = UnicodeCategory("Miscellaneous Symbols and Arrows")
-export const Glagolitic = UnicodeCategory("Glagolitic")
-export const LatinExtendedC = UnicodeCategory("Latin Extended-C")
-export const Coptic = UnicodeCategory("Coptic")
-export const GeorgianSupplement = UnicodeCategory("Georgian Supplement")
-export const Tifinagh = UnicodeCategory("Tifinagh")
-export const EthiopicExtended = UnicodeCategory("Ethiopic Extended")
-export const CyrillicExtendedA = UnicodeCategory("Cyrillic Extended-A")
-export const SupplementalPunctuation = UnicodeCategory("Supplemental Punctuation")
-export const CJKRadicalsSupplement = UnicodeCategory("CJK Radicals Supplement")
-export const KangxiRadicals = UnicodeCategory("Kangxi Radicals")
-export const IdeographicDescriptionCharacters = UnicodeCategory("Ideographic Description Characters")
-export const CJKSymbolsAndPunctuation = UnicodeCategory("CJK Symbols and Punctuation")
-export const Hiragana = UnicodeCategory("Hiragana")
-export const Katakana = UnicodeCategory("Katakana")
-export const Bopomofo = UnicodeCategory("Bopomofo")
-export const HangulCompatibilityJamo = UnicodeCategory("Hangul Compatibility Jamo")
-export const Kanbun = UnicodeCategory("Kanbun")
-export const BopomofoExtended = UnicodeCategory("Bopomofo Extended")
-export const CJKStrokes = UnicodeCategory("CJK Strokes")
-export const KatakanaPhoneticExtensions = UnicodeCategory("Katakana Phonetic Extensions")
-export const EnclosedCJKLettersAndMonths = UnicodeCategory("Enclosed CJK Letters and Months")
-export const CJKCompatibility = UnicodeCategory("CJK Compatibility")
-export const CJKUnifiedIdeographsExtensionA = UnicodeCategory("CJK Unified Ideographs Extension A")
-export const YijingHexagramSymbols = UnicodeCategory("Yijing Hexagram Symbols")
-export const CJKUnifiedIdeographs = UnicodeCategory("CJK Unified Ideographs")
-export const YiSyllables = UnicodeCategory("Yi Syllables")
-export const YiRadicals = UnicodeCategory("Yi Radicals")
-export const Lisu = UnicodeCategory("Lisu")
-export const Vai = UnicodeCategory("Vai")
-export const CyrillicExtendedB = UnicodeCategory("Cyrillic Extended-B")
-export const Bamum = UnicodeCategory("Bamum")
-export const ModifierToneLetters = UnicodeCategory("Modifier Tone Letters")
-export const LatinExtendedD = UnicodeCategory("Latin Extended-D")
-export const SylotiNagri = UnicodeCategory("Syloti Nagri")
-export const CommonIndicNumberForms = UnicodeCategory("Common Indic Number Forms")
-export const PhagsPa = UnicodeCategory("Phags-pa")
-export const Saurashtra = UnicodeCategory("Saurashtra")
-export const DevanagariExtended = UnicodeCategory("Devanagari Extended")
-export const KayahLi = UnicodeCategory("Kayah Li")
-export const Rejang = UnicodeCategory("Rejang")
-export const HangulJamoExtendedA = UnicodeCategory("Hangul Jamo Extended-A")
-export const Javanese = UnicodeCategory("Javanese")
-export const MyanmarExtendedB = UnicodeCategory("Myanmar Extended-B")
-export const Cham = UnicodeCategory("Cham")
-export const MyanmarExtendedA = UnicodeCategory("Myanmar Extended-A")
-export const TaiViet = UnicodeCategory("Tai Viet")
-export const MeeteiMayekExtensions = UnicodeCategory("Meetei Mayek Extensions")
-export const EthiopicExtendedA = UnicodeCategory("Ethiopic Extended-A")
-export const LatinExtendedE = UnicodeCategory("Latin Extended-E")
-export const CherokeeSupplement = UnicodeCategory("Cherokee Supplement")
-export const MeeteiMayek = UnicodeCategory("Meetei Mayek")
-export const HangulSyllables = UnicodeCategory("Hangul Syllables")
-export const HangulJamoExtendedB = UnicodeCategory("Hangul Jamo Extended-B")
-export const HighSurrogates = UnicodeCategory("High Surrogates")
-export const HighPrivateUseSurrogates = UnicodeCategory("High Private Use Surrogates")
-export const LowSurrogates = UnicodeCategory("Low Surrogates")
-export const PrivateUseArea = UnicodeCategory("Private Use Area")
-export const CJKCompatibilityIdeographs = UnicodeCategory("CJK Compatibility Ideographs")
-export const AlphabeticPresentationForms = UnicodeCategory("Alphabetic Presentation Forms")
-export const ArabicPresentationFormsA = UnicodeCategory("Arabic Presentation Forms-A")
-export const VariationSelectors = UnicodeCategory("Variation Selectors")
-export const VerticalForms = UnicodeCategory("Vertical Forms")
-export const CombiningHalfMarks = UnicodeCategory("Combining Half Marks")
-export const CJKCompatibilityForms = UnicodeCategory("CJK Compatibility Forms")
-export const SmallFormVariants = UnicodeCategory("Small Form Variants")
-export const ArabicPresentationFormsB = UnicodeCategory("Arabic Presentation Forms-B")
-export const HalfwidthAndFullwidthForms = UnicodeCategory("Halfwidth and Fullwidth Forms")
-export const Specials = UnicodeCategory("Specials")
-export const LinearBSyllabary = UnicodeCategory("Linear B Syllabary")
-export const LinearBIdeograms = UnicodeCategory("Linear B Ideograms")
-export const AegeanNumbers = UnicodeCategory("Aegean Numbers")
-export const AncientGreekNumbers = UnicodeCategory("Ancient Greek Numbers")
-export const AncientSymbols = UnicodeCategory("Ancient Symbols")
-export const PhaistosDisc = UnicodeCategory("Phaistos Disc")
-export const Lycian = UnicodeCategory("Lycian")
-export const Carian = UnicodeCategory("Carian")
-export const CopticEpactNumbers = UnicodeCategory("Coptic Epact Numbers")
-export const OldItalic = UnicodeCategory("Old Italic")
-export const Gothic = UnicodeCategory("Gothic")
-export const OldPermic = UnicodeCategory("Old Permic")
-export const Ugaritic = UnicodeCategory("Ugaritic")
-export const OldPersian = UnicodeCategory("Old Persian")
-export const Deseret = UnicodeCategory("Deseret")
-export const Shavian = UnicodeCategory("Shavian")
-export const Osmanya = UnicodeCategory("Osmanya")
-export const Elbasan = UnicodeCategory("Elbasan")
-export const CaucasianAlbanian = UnicodeCategory("Caucasian Albanian")
-export const LinearA = UnicodeCategory("Linear A")
-export const CypriotSyllabary = UnicodeCategory("Cypriot Syllabary")
-export const ImperialAramaic = UnicodeCategory("Imperial Aramaic")
-export const Palmyrene = UnicodeCategory("Palmyrene")
-export const Nabataean = UnicodeCategory("Nabataean")
-export const Hatran = UnicodeCategory("Hatran")
-export const Phoenician = UnicodeCategory("Phoenician")
-export const Lydian = UnicodeCategory("Lydian")
-export const MeroiticHieroglyphs = UnicodeCategory("Meroitic Hieroglyphs")
-export const MeroiticCursive = UnicodeCategory("Meroitic Cursive")
-export const Kharoshthi = UnicodeCategory("Kharoshthi")
-export const OldSouthArabian = UnicodeCategory("Old South Arabian")
-export const OldNorthArabian = UnicodeCategory("Old North Arabian")
-export const Manichaean = UnicodeCategory("Manichaean")
-export const Avestan = UnicodeCategory("Avestan")
-export const InscriptionalParthian = UnicodeCategory("Inscriptional Parthian")
-export const InscriptionalPahlavi = UnicodeCategory("Inscriptional Pahlavi")
-export const PsalterPahlavi = UnicodeCategory("Psalter Pahlavi")
-export const OldTurkic = UnicodeCategory("Old Turkic")
-export const OldHungarian = UnicodeCategory("Old Hungarian")
-export const RumiNumeralSymbols = UnicodeCategory("Rumi Numeral Symbols")
-export const Brahmi = UnicodeCategory("Brahmi")
-export const Kaithi = UnicodeCategory("Kaithi")
-export const SoraSompeng = UnicodeCategory("Sora Sompeng")
-export const Chakma = UnicodeCategory("Chakma")
-export const Mahajani = UnicodeCategory("Mahajani")
-export const Sharada = UnicodeCategory("Sharada")
-export const SinhalaArchaicNumbers = UnicodeCategory("Sinhala Archaic Numbers")
-export const Khojki = UnicodeCategory("Khojki")
-export const Multani = UnicodeCategory("Multani")
-export const Khudawadi = UnicodeCategory("Khudawadi")
-export const Grantha = UnicodeCategory("Grantha")
-export const Tirhuta = UnicodeCategory("Tirhuta")
-export const Siddham = UnicodeCategory("Siddham")
-export const Modi = UnicodeCategory("Modi")
-export const Takri = UnicodeCategory("Takri")
-export const Ahom = UnicodeCategory("Ahom")
-export const WarangCiti = UnicodeCategory("Warang Citi")
-export const PauCinHau = UnicodeCategory("Pau Cin Hau")
-export const Cuneiform = UnicodeCategory("Cuneiform")
-export const CuneiformNumbersAndPunctuation = UnicodeCategory("Cuneiform Numbers and Punctuation")
-export const EarlyDynasticCuneiform = UnicodeCategory("Early Dynastic Cuneiform")
-export const EgyptianHieroglyphs = UnicodeCategory("Egyptian Hieroglyphs")
-export const AnatolianHieroglyphs = UnicodeCategory("Anatolian Hieroglyphs")
-export const BamumSupplement = UnicodeCategory("Bamum Supplement")
-export const Mro = UnicodeCategory("Mro")
-export const BassaVah = UnicodeCategory("Bassa Vah")
-export const PahawhHmong = UnicodeCategory("Pahawh Hmong")
-export const Miao = UnicodeCategory("Miao")
-export const KanaSupplement = UnicodeCategory("Kana Supplement")
-export const Duployan = UnicodeCategory("Duployan")
-export const ShorthandFormatControls = UnicodeCategory("Shorthand Format Controls")
-export const ByzantineMusicalSymbols = UnicodeCategory("Byzantine Musical Symbols")
-export const MusicalSymbols = UnicodeCategory("Musical Symbols")
-export const AncientGreekMusicalNotation = UnicodeCategory("Ancient Greek Musical Notation")
-export const TaiXuanJingSymbols = UnicodeCategory("Tai Xuan Jing Symbols")
-export const CountingRodNumerals = UnicodeCategory("Counting Rod Numerals")
-export const MathematicalAlphanumericSymbols = UnicodeCategory("Mathematical Alphanumeric Symbols")
-export const SuttonSignWriting = UnicodeCategory("Sutton SignWriting")
-export const Mendekikak = UnicodeCategory("Mende Kikakui")
-export const ArabicMathematicalAlphabeticSymbols = UnicodeCategory("Arabic Mathematical Alphabetic Symbols")
-export const MahjongTiles = UnicodeCategory("Mahjong Tiles")
-export const DominoTiles = UnicodeCategory("Domino Tiles")
-export const PlayingCards = UnicodeCategory("Playing Cards")
-export const EnclosedAlphanumericSupplement = UnicodeCategory("Enclosed Alphanumeric Supplement")
-export const EnclosedIdeographicSupplement = UnicodeCategory("Enclosed Ideographic Supplement")
-export const MiscellaneousSymbolsAndPictographs = UnicodeCategory("Miscellaneous Symbols and Pictographs")
-export const Emoticons = UnicodeCategory("Emoticons (Emoji)")
-export const OrnamentalDingbats = UnicodeCategory("Ornamental Dingbats")
-export const TransportAndMapSymbols = UnicodeCategory("Transport and Map Symbols")
-export const AlchemicalSymbols = UnicodeCategory("Alchemical Symbols")
-export const GeometricShapesExtended = UnicodeCategory("Geometric Shapes Extended")
-export const SupplementalArrowsC = UnicodeCategory("Supplemental Arrows-C")
-export const SupplementalSymbolsAndPictographs = UnicodeCategory("Supplemental Symbols and Pictographs")
+export const blocks = {
+  controlCharacter: UnicodeCategory("Control Character"),
+  basicLatin: UnicodeCategory("Basic Latin"),
+  latin1Supplement: UnicodeCategory("Latin-1 Supplement"),
+  latinExtendedA: UnicodeCategory("Latin Extended-A"),
+  latinExtendedB: UnicodeCategory("Latin Extended-B"),
+  ipaExtensions: UnicodeCategory("IPA Extensions"),
+  spacingModifierLetters: UnicodeCategory("Spacing Modifier Letters"),
+  combiningDiacriticalMarks: UnicodeCategory("Combining Diacritical Marks"),
+  greekAndCoptic: UnicodeCategory("Greek and Coptic"),
+  cyrillic: UnicodeCategory("Cyrillic"),
+  cyrillicSupplement: UnicodeCategory("Cyrillic Supplement"),
+  armenian: UnicodeCategory("Armenian"),
+  hebrew: UnicodeCategory("Hebrew"),
+  arabic: UnicodeCategory("Arabic"),
+  syriac: UnicodeCategory("Syriac"),
+  arabicSupplement: UnicodeCategory("Arabic Supplement"),
+  thaana: UnicodeCategory("Thaana"),
+  nko: UnicodeCategory("NKo"),
+  samaritan: UnicodeCategory("Samaritan"),
+  mandaic: UnicodeCategory("Mandaic"),
+  arabicExtendedA: UnicodeCategory("Arabic Extended-A"),
+  devanagari: UnicodeCategory("Devanagari"),
+  bengali: UnicodeCategory("Bengali"),
+  gurmukhi: UnicodeCategory("Gurmukhi"),
+  gujarati: UnicodeCategory("Gujarati"),
+  oriya: UnicodeCategory("Oriya"),
+  tamil: UnicodeCategory("Tamil"),
+  telugu: UnicodeCategory("Telugu"),
+  kannada: UnicodeCategory("Kannada"),
+  malayalam: UnicodeCategory("Malayalam"),
+  sinhala: UnicodeCategory("Sinhala"),
+  thai: UnicodeCategory("Thai"),
+  lao: UnicodeCategory("Lao"),
+  tibetan: UnicodeCategory("Tibetan"),
+  myanmar: UnicodeCategory("Myanmar"),
+  georgian: UnicodeCategory("Georgian"),
+  hangulJamo: UnicodeCategory("Hangul Jamo"),
+  ethiopic: UnicodeCategory("Ethiopic"),
+  ethiopicSupplement: UnicodeCategory("Ethiopic Supplement"),
+  cherokee: UnicodeCategory("Cherokee"),
+  unifiedCanadianAboriginalSyllabics: UnicodeCategory("Unified Canadian Aboriginal Syllabics"),
+  ogham: UnicodeCategory("Ogham"),
+  runic: UnicodeCategory("Runic"),
+  tagalog: UnicodeCategory("Tagalog"),
+  hanunoo: UnicodeCategory("Hanunoo"),
+  buhid: UnicodeCategory("Buhid"),
+  tagbanwa: UnicodeCategory("Tagbanwa"),
+  khmer: UnicodeCategory("Khmer"),
+  mongolian: UnicodeCategory("Mongolian"),
+  unifiedCanadianAboriginalSyllabicsExtended: UnicodeCategory("Unified Canadian Aboriginal Syllabics Extended"),
+  limbu: UnicodeCategory("Limbu"),
+  taiLe: UnicodeCategory("Tai Le"),
+  newTaiLue: UnicodeCategory("New Tai Lue"),
+  khmerSymbols: UnicodeCategory("Khmer Symbols"),
+  buginese: UnicodeCategory("Buginese"),
+  taiTham: UnicodeCategory("Tai Tham"),
+  combiningDiacriticalMarksExtended: UnicodeCategory("Combining Diacritical Marks Extended"),
+  balinese: UnicodeCategory("Balinese"),
+  sundanese: UnicodeCategory("Sundanese"),
+  batak: UnicodeCategory("Batak"),
+  lepcha: UnicodeCategory("Lepcha"),
+  olChiki: UnicodeCategory("Ol Chiki"),
+  sundaneseSupplement: UnicodeCategory("Sundanese Supplement"),
+  vedicExtensions: UnicodeCategory("Vedic Extensions"),
+  phoneticExtensions: UnicodeCategory("Phonetic Extensions"),
+  phoneticExtensionsSupplement: UnicodeCategory("Phonetic Extensions Supplement"),
+  combiningDiacriticalMarksSupplement: UnicodeCategory("Combining Diacritical Marks Supplement"),
+  latinExtendedAdditional: UnicodeCategory("Latin Extended Additional"),
+  greekExtended: UnicodeCategory("Greek Extended"),
+  generalPunctuation: UnicodeCategory("General Punctuation"),
+  superscriptsAndSubscripts: UnicodeCategory("Superscripts and Subscripts"),
+  currencySymbols: UnicodeCategory("Currency Symbols"),
+  combiningDiacriticalMarksForSymbols: UnicodeCategory("Combining Diacritical Marks for Symbols"),
+  letterlikeSymbols: UnicodeCategory("Letterlike Symbols"),
+  numberForms: UnicodeCategory("Number Forms"),
+  arrows: UnicodeCategory("Arrows"),
+  mathematicalOperators: UnicodeCategory("Mathematical Operators"),
+  miscellaneousTechnical: UnicodeCategory("Miscellaneous Technical"),
+  controlPictures: UnicodeCategory("Control Pictures"),
+  opticalCharacterRecognition: UnicodeCategory("Optical Character Recognition"),
+  enclosedAlphanumerics: UnicodeCategory("Enclosed Alphanumerics"),
+  boxDrawing: UnicodeCategory("Box Drawing"),
+  blockElements: UnicodeCategory("Block Elements"),
+  geometricShapes: UnicodeCategory("Geometric Shapes"),
+  miscellaneousSymbols: UnicodeCategory("Miscellaneous Symbols"),
+  dingbats: UnicodeCategory("Dingbats"),
+  miscellaneousMathematicalSymbolsA: UnicodeCategory("Miscellaneous Mathematical Symbols-A"),
+  supplementalArrowsA: UnicodeCategory("Supplemental Arrows-A"),
+  braillePatterns: UnicodeCategory("Braille Patterns"),
+  supplementalArrowsB: UnicodeCategory("Supplemental Arrows-B"),
+  miscellaneousMathematicalSymbolsB: UnicodeCategory("Miscellaneous Mathematical Symbols-B"),
+  supplementalMathematicalOperators: UnicodeCategory("Supplemental Mathematical Operators"),
+  miscellaneousSymbolsAndArrows: UnicodeCategory("Miscellaneous Symbols and Arrows"),
+  glagolitic: UnicodeCategory("Glagolitic"),
+  latinExtendedC: UnicodeCategory("Latin Extended-C"),
+  coptic: UnicodeCategory("Coptic"),
+  georgianSupplement: UnicodeCategory("Georgian Supplement"),
+  tifinagh: UnicodeCategory("Tifinagh"),
+  ethiopicExtended: UnicodeCategory("Ethiopic Extended"),
+  cyrillicExtendedA: UnicodeCategory("Cyrillic Extended-A"),
+  supplementalPunctuation: UnicodeCategory("Supplemental Punctuation"),
+  cJKRadicalsSupplement: UnicodeCategory("CJK Radicals Supplement"),
+  kangxiRadicals: UnicodeCategory("Kangxi Radicals"),
+  ideographicDescriptionCharacters: UnicodeCategory("Ideographic Description Characters"),
+  cJKSymbolsAndPunctuation: UnicodeCategory("CJK Symbols and Punctuation"),
+  hiragana: UnicodeCategory("Hiragana"),
+  katakana: UnicodeCategory("Katakana"),
+  bopomofo: UnicodeCategory("Bopomofo"),
+  hangulCompatibilityJamo: UnicodeCategory("Hangul Compatibility Jamo"),
+  kanbun: UnicodeCategory("Kanbun"),
+  bopomofoExtended: UnicodeCategory("Bopomofo Extended"),
+  cJKStrokes: UnicodeCategory("CJK Strokes"),
+  katakanaPhoneticExtensions: UnicodeCategory("Katakana Phonetic Extensions"),
+  enclosedCJKLettersAndMonths: UnicodeCategory("Enclosed CJK Letters and Months"),
+  cJKCompatibility: UnicodeCategory("CJK Compatibility"),
+  cJKUnifiedIdeographsExtensionA: UnicodeCategory("CJK Unified Ideographs Extension A"),
+  yijingHexagramSymbols: UnicodeCategory("Yijing Hexagram Symbols"),
+  cJKUnifiedIdeographs: UnicodeCategory("CJK Unified Ideographs"),
+  yiSyllables: UnicodeCategory("Yi Syllables"),
+  yiRadicals: UnicodeCategory("Yi Radicals"),
+  lisu: UnicodeCategory("Lisu"),
+  vai: UnicodeCategory("Vai"),
+  cyrillicExtendedB: UnicodeCategory("Cyrillic Extended-B"),
+  bamum: UnicodeCategory("Bamum"),
+  modifierToneLetters: UnicodeCategory("Modifier Tone Letters"),
+  latinExtendedD: UnicodeCategory("Latin Extended-D"),
+  sylotiNagri: UnicodeCategory("Syloti Nagri"),
+  commonIndicNumberForms: UnicodeCategory("Common Indic Number Forms"),
+  phagsPa: UnicodeCategory("Phags-pa"),
+  saurashtra: UnicodeCategory("Saurashtra"),
+  devanagariExtended: UnicodeCategory("Devanagari Extended"),
+  kayahLi: UnicodeCategory("Kayah Li"),
+  rejang: UnicodeCategory("Rejang"),
+  hangulJamoExtendedA: UnicodeCategory("Hangul Jamo Extended-A"),
+  javanese: UnicodeCategory("Javanese"),
+  myanmarExtendedB: UnicodeCategory("Myanmar Extended-B"),
+  cham: UnicodeCategory("Cham"),
+  myanmarExtendedA: UnicodeCategory("Myanmar Extended-A"),
+  taiViet: UnicodeCategory("Tai Viet"),
+  meeteiMayekExtensions: UnicodeCategory("Meetei Mayek Extensions"),
+  ethiopicExtendedA: UnicodeCategory("Ethiopic Extended-A"),
+  latinExtendedE: UnicodeCategory("Latin Extended-E"),
+  cherokeeSupplement: UnicodeCategory("Cherokee Supplement"),
+  meeteiMayek: UnicodeCategory("Meetei Mayek"),
+  hangulSyllables: UnicodeCategory("Hangul Syllables"),
+  hangulJamoExtendedB: UnicodeCategory("Hangul Jamo Extended-B"),
+  highSurrogates: UnicodeCategory("High Surrogates"),
+  highPrivateUseSurrogates: UnicodeCategory("High Private Use Surrogates"),
+  lowSurrogates: UnicodeCategory("Low Surrogates"),
+  privateUseArea: UnicodeCategory("Private Use Area"),
+  cJKCompatibilityIdeographs: UnicodeCategory("CJK Compatibility Ideographs"),
+  alphabeticPresentationForms: UnicodeCategory("Alphabetic Presentation Forms"),
+  arabicPresentationFormsA: UnicodeCategory("Arabic Presentation Forms-A"),
+  variationSelectors: UnicodeCategory("Variation Selectors"),
+  verticalForms: UnicodeCategory("Vertical Forms"),
+  combiningHalfMarks: UnicodeCategory("Combining Half Marks"),
+  cJKCompatibilityForms: UnicodeCategory("CJK Compatibility Forms"),
+  smallFormVariants: UnicodeCategory("Small Form Variants"),
+  arabicPresentationFormsB: UnicodeCategory("Arabic Presentation Forms-B"),
+  halfwidthAndFullwidthForms: UnicodeCategory("Halfwidth and Fullwidth Forms"),
+  specials: UnicodeCategory("Specials"),
+  linearBSyllabary: UnicodeCategory("Linear B Syllabary"),
+  linearBIdeograms: UnicodeCategory("Linear B Ideograms"),
+  aegeanNumbers: UnicodeCategory("Aegean Numbers"),
+  ancientGreekNumbers: UnicodeCategory("Ancient Greek Numbers"),
+  ancientSymbols: UnicodeCategory("Ancient Symbols"),
+  phaistosDisc: UnicodeCategory("Phaistos Disc"),
+  lycian: UnicodeCategory("Lycian"),
+  carian: UnicodeCategory("Carian"),
+  copticEpactNumbers: UnicodeCategory("Coptic Epact Numbers"),
+  oldItalic: UnicodeCategory("Old Italic"),
+  gothic: UnicodeCategory("Gothic"),
+  oldPermic: UnicodeCategory("Old Permic"),
+  ugaritic: UnicodeCategory("Ugaritic"),
+  oldPersian: UnicodeCategory("Old Persian"),
+  deseret: UnicodeCategory("Deseret"),
+  shavian: UnicodeCategory("Shavian"),
+  osmanya: UnicodeCategory("Osmanya"),
+  elbasan: UnicodeCategory("Elbasan"),
+  caucasianAlbanian: UnicodeCategory("Caucasian Albanian"),
+  linearA: UnicodeCategory("Linear A"),
+  cypriotSyllabary: UnicodeCategory("Cypriot Syllabary"),
+  imperialAramaic: UnicodeCategory("Imperial Aramaic"),
+  palmyrene: UnicodeCategory("Palmyrene"),
+  nabataean: UnicodeCategory("Nabataean"),
+  hatran: UnicodeCategory("Hatran"),
+  phoenician: UnicodeCategory("Phoenician"),
+  lydian: UnicodeCategory("Lydian"),
+  meroiticHieroglyphs: UnicodeCategory("Meroitic Hieroglyphs"),
+  meroiticCursive: UnicodeCategory("Meroitic Cursive"),
+  kharoshthi: UnicodeCategory("Kharoshthi"),
+  oldSouthArabian: UnicodeCategory("Old South Arabian"),
+  oldNorthArabian: UnicodeCategory("Old North Arabian"),
+  manichaean: UnicodeCategory("Manichaean"),
+  avestan: UnicodeCategory("Avestan"),
+  inscriptionalParthian: UnicodeCategory("Inscriptional Parthian"),
+  inscriptionalPahlavi: UnicodeCategory("Inscriptional Pahlavi"),
+  psalterPahlavi: UnicodeCategory("Psalter Pahlavi"),
+  oldTurkic: UnicodeCategory("Old Turkic"),
+  oldHungarian: UnicodeCategory("Old Hungarian"),
+  rumiNumeralSymbols: UnicodeCategory("Rumi Numeral Symbols"),
+  brahmi: UnicodeCategory("Brahmi"),
+  kaithi: UnicodeCategory("Kaithi"),
+  soraSompeng: UnicodeCategory("Sora Sompeng"),
+  chakma: UnicodeCategory("Chakma"),
+  mahajani: UnicodeCategory("Mahajani"),
+  sharada: UnicodeCategory("Sharada"),
+  sinhalaArchaicNumbers: UnicodeCategory("Sinhala Archaic Numbers"),
+  khojki: UnicodeCategory("Khojki"),
+  multani: UnicodeCategory("Multani"),
+  khudawadi: UnicodeCategory("Khudawadi"),
+  grantha: UnicodeCategory("Grantha"),
+  tirhuta: UnicodeCategory("Tirhuta"),
+  siddham: UnicodeCategory("Siddham"),
+  modi: UnicodeCategory("Modi"),
+  takri: UnicodeCategory("Takri"),
+  ahom: UnicodeCategory("Ahom"),
+  warangCiti: UnicodeCategory("Warang Citi"),
+  pauCinHau: UnicodeCategory("Pau Cin Hau"),
+  cuneiform: UnicodeCategory("Cuneiform"),
+  cuneiformNumbersAndPunctuation: UnicodeCategory("Cuneiform Numbers and Punctuation"),
+  earlyDynasticCuneiform: UnicodeCategory("Early Dynastic Cuneiform"),
+  egyptianHieroglyphs: UnicodeCategory("Egyptian Hieroglyphs"),
+  anatolianHieroglyphs: UnicodeCategory("Anatolian Hieroglyphs"),
+  bamumSupplement: UnicodeCategory("Bamum Supplement"),
+  mro: UnicodeCategory("Mro"),
+  bassaVah: UnicodeCategory("Bassa Vah"),
+  pahawhHmong: UnicodeCategory("Pahawh Hmong"),
+  miao: UnicodeCategory("Miao"),
+  kanaSupplement: UnicodeCategory("Kana Supplement"),
+  duployan: UnicodeCategory("Duployan"),
+  shorthandFormatControls: UnicodeCategory("Shorthand Format Controls"),
+  byzantineMusicalSymbols: UnicodeCategory("Byzantine Musical Symbols"),
+  musicalSymbols: UnicodeCategory("Musical Symbols"),
+  ancientGreekMusicalNotation: UnicodeCategory("Ancient Greek Musical Notation"),
+  taiXuanJingSymbols: UnicodeCategory("Tai Xuan Jing Symbols"),
+  countingRodNumerals: UnicodeCategory("Counting Rod Numerals"),
+  mathematicalAlphanumericSymbols: UnicodeCategory("Mathematical Alphanumeric Symbols"),
+  suttonSignWriting: UnicodeCategory("Sutton SignWriting"),
+  mendekikak: UnicodeCategory("Mende Kikakui"),
+  arabicMathematicalAlphabeticSymbols: UnicodeCategory("Arabic Mathematical Alphabetic Symbols"),
+  mahjongTiles: UnicodeCategory("Mahjong Tiles"),
+  dominoTiles: UnicodeCategory("Domino Tiles"),
+  playingCards: UnicodeCategory("Playing Cards"),
+  enclosedAlphanumericSupplement: UnicodeCategory("Enclosed Alphanumeric Supplement"),
+  enclosedIdeographicSupplement: UnicodeCategory("Enclosed Ideographic Supplement"),
+  miscellaneousSymbolsAndPictographs: UnicodeCategory("Miscellaneous Symbols and Pictographs"),
+  emoticons: UnicodeCategory("Emoticons (Emoji)"),
+  ornamentalDingbats: UnicodeCategory("Ornamental Dingbats"),
+  transportAndMapSymbols: UnicodeCategory("Transport and Map Symbols"),
+  alchemicalSymbols: UnicodeCategory("Alchemical Symbols"),
+  geometricShapesExtended: UnicodeCategory("Geometric Shapes Extended"),
+  supplementalArrowsC: UnicodeCategory("Supplemental Arrows-C"),
+  supplementalSymbolsAndPictographs: UnicodeCategory("Supplemental Symbols and Pictographs")
+}
+
+export const categories = {
+
+}
