@@ -3,8 +3,15 @@ import { unwrap } from "../types.ts";
 
 /*
  * Construct an array from a wrapped element and wrapped array-length
- * Vv
-         */
+ *
+ * @param key A wrapped element that represents the key of the object
+ * @param val A wrapped element that represents the value of the object
+ * @param size A wrapped integer that represents the size of the object
+ *
+ * @returns A thunk that returns an object with the chosen keys, values, and number of properties. Note
+ *   that size is an upper-limit; if key yields duplicate values, the resulting object will have fewer
+ *   properties
+ */
 export function from<K extends string | number | symbol, V>(
   key: Wrapped<K>,
   val: Wrapped<V>,

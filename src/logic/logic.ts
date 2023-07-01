@@ -1,6 +1,11 @@
 import type { Density, Thunk } from "../types.ts";
 import { unwrap } from "../types.ts";
 
+/*
+ * A fuzzer that returns a random boolean
+ *
+ * @param density A discrete density function that determines the probability of a particular element being chosen
+ */
 export function oneOf<T>(density: Density, elems: T[]) {
   return (): T => {
     const data = unwrap(elems);

@@ -1,3 +1,5 @@
+// If you want to use the module, import this file
+
 import type { Thunk } from "../src/types.ts";
 
 export function K<T>(val: T): Thunk<T> {

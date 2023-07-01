@@ -3,7 +3,20 @@ import { unwrap } from "../types.ts";
 import * as Logic from "../logic/logic.ts";
 
 import { LETTERS, LOWERCASE_LETTERS, UPPERCASE_LETTERS } from "../constants.ts";
+import UnicodeRanges from "../../data/unicode_ranges.json" assert {
+  type: 'json'
+}
 
+/*
+ *
+ * Construct a string from a wrapped substring and wrapped string-length
+ *
+ * @param val A wrapped substring
+ * @param size A wrapped integer that represents the length of the string
+ *
+ * @returns A thunk that returns a string with the chosen number of substrings
+ *   determined by the val fuzzer
+ */
 export function from(
   val: Wrapped<string>,
   size: Wrapped<number>,
@@ -20,67 +33,131 @@ export function from(
   };
 }
 
+/*
+ * Return a random digit
+ *
+ * @param density A discrete density function that determines the probability of a particular digit being chosen
+ *
+ * @returns A thunk that returns a random digit
+ */
 export function digit(density: Density) {
   return (): string => {
     return `${unwrap(density(0, 10))}`;
   };
 }
 
+/*
+ * Return a random non-zero digit
+ *
+ * @param density A discrete density function that determines the probability of a particular digit being chosen
+ *
+ * @returns A thunk that returns a random non-zero digit
+ */
 export function nonZeroDigit(density: Density) {
   return (): string => {
     return `${unwrap(density(1, 10))}`;
   };
 }
 
+/*
+ * A fuzzer that always returns the unix newline
+ */
 export function unixNewline() {
   return () => `\n`;
 }
 
+/*
+ * A fuzzer that always returns the windows newline
+ */
 export function windowsNewline() {
   return () => `\r\n`;
 }
 
+/*
+ * A fuzzer that returns an OS newline
+ *
+ *  @param density A discrete density function that determines the probability of a particular newline being chosen
+ *
+ * @returns A thunk that returns a random newline
+ */
 export function newline(density: Density): Thunk<string> {
   return () => {
     return Logic.oneOf(density, ["\n", "\r\n"])();
   };
 }
 
+/*
+ * A fuzzer that always returns a space
+ */
 export function space(): Thunk<string> {
   return () => " ";
 }
+
+/*
+ * A fuzzer that always returns a tab
+ */
 export function tab(): Thunk<string> {
   return () => "\t";
 }
 
+/*
+ * A fuzzer that always returns an hyphen
+ */
 export function hyphen(): Thunk<string> {
   return () => "-";
 }
 
+/*
+ * A fuzzer that always returns an underscore
+ */
 export function underscore(): Thunk<string> {
   return () => "_";
 }
 
+/*
+ * A fuzzer tha returns a lowercase latin letter
+ *
+ *  @param density A discrete density function that determines the probability of a particular letter being chosen
+ *
+ * @returns A thunk that returns a random letter
+ */
 export function lowercaseLetters(density: Density): Thunk<string> {
   return Logic.oneOf(density, LOWERCASE_LETTERS);
 }
 
+/*
+ * A fuzzer tha returns an uppercase latin letter
+ *
+ *  @param density A discrete density function that determines the probability of a particular letter being chosen
+ *
+ * @returns A thunk that returns a random letter
+ */
 export function uppercaseLetters(density: Density): Thunk<string> {
   return Logic.oneOf(density, UPPERCASE_LETTERS);
 }
 
+/*
+ * A fuzzer tha returns a latin letter
+ *
+ *  @param density A discrete density function that determines the probability of a particular letter being chosen
+ *
+ * @returns A thunk that returns a random letter
+ */
 export function letters(density: Density): Thunk<string> {
   return Logic.oneOf(density, LETTERS);
 }
 
+/*
+ * Chain several fuzzers into a string
+ *
+ * @param elems A list of fuzzers
+ *
+ * @returns A thunk that returns an string of the results of each fuzzer
+ */
 export function concat(...strings: Wrapped<string>[]): Thunk<string> {
   return () => {
     return strings.map(str => unwrap(str)).join("");
   };
-}
-
-import UnicodeRanges from "https://raw.githubusercontent.com/radiovisual/unicode-range-json/master/unicode-ranges.json" assert {
-  type: 'json'
 }
 
 type UnicodeCategoryData = {
@@ -88,6 +165,7 @@ type UnicodeCategoryData = {
   hexrange: string[]
   category: string
 }
+
 
 function UnicodeCategory(category: string) {
   const data:UnicodeCategoryData | undefined = UnicodeRanges.find(range => range.category === category);
@@ -106,6 +184,9 @@ function UnicodeCategory(category: string) {
   }
 }
 
+/*
+ * These fuzzers generate unicode characters from each unicode block
+ */
 export const blocks = {
   controlCharacter: UnicodeCategory("Control Character"),
   basicLatin: UnicodeCategory("Basic Latin"),
