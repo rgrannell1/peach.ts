@@ -2794,15 +2794,15 @@
     ]
   },
   {
-  "category": "Supplemental Private Use Area-A",
-  "hexrange": [
-    "F0000",
-    "FFFFD"
-  ],
-  "range": [
-    983040,
-    1048573
-  ]
+    "category": "Supplemental Private Use Area-A",
+    "hexrange": [
+      "F0000",
+      "FFFFD"
+    ],
+    "range": [
+      983040,
+      1048573
+    ]
   },
   {
     "category": "Supplemental Private Use Area-B",

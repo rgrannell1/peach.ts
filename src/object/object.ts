@@ -1,7 +1,7 @@
 import type { Thunk, Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
 
-/*
+/**
  * Construct an array from a wrapped element and wrapped array-length
  *
  * @param key A wrapped element that represents the key of the object

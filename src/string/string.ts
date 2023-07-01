@@ -4,11 +4,10 @@ import * as Logic from "../logic/logic.ts";
 
 import { LETTERS, LOWERCASE_LETTERS, UPPERCASE_LETTERS } from "../constants.ts";
 import UnicodeRanges from "../../data/unicode_ranges.json" assert {
-  type: 'json'
-}
+  type: "json",
+};
 
-/*
- *
+/**
  * Construct a string from a wrapped substring and wrapped string-length
  *
  * @param val A wrapped substring
@@ -33,7 +32,7 @@ export function from(
   };
 }
 
-/*
+/**
  * Return a random digit
  *
  * @param density A discrete density function that determines the probability of a particular digit being chosen
@@ -46,7 +45,7 @@ export function digit(density: Density) {
   };
 }
 
-/*
+/**
  * Return a random non-zero digit
  *
  * @param density A discrete density function that determines the probability of a particular digit being chosen
@@ -59,21 +58,21 @@ export function nonZeroDigit(density: Density) {
   };
 }
 
-/*
+/**
  * A fuzzer that always returns the unix newline
  */
 export function unixNewline() {
   return () => `\n`;
 }
 
-/*
+/**
  * A fuzzer that always returns the windows newline
  */
 export function windowsNewline() {
   return () => `\r\n`;
 }
 
-/*
+/**
  * A fuzzer that returns an OS newline
  *
  *  @param density A discrete density function that determines the probability of a particular newline being chosen
@@ -86,35 +85,35 @@ export function newline(density: Density): Thunk<string> {
   };
 }
 
-/*
+/**
  * A fuzzer that always returns a space
  */
 export function space(): Thunk<string> {
   return () => " ";
 }
 
-/*
+/**
  * A fuzzer that always returns a tab
  */
 export function tab(): Thunk<string> {
   return () => "\t";
 }
 
-/*
+/**
  * A fuzzer that always returns an hyphen
  */
 export function hyphen(): Thunk<string> {
   return () => "-";
 }
 
-/*
+/**
  * A fuzzer that always returns an underscore
  */
 export function underscore(): Thunk<string> {
   return () => "_";
 }
 
-/*
+/**
  * A fuzzer tha returns a lowercase latin letter
  *
  *  @param density A discrete density function that determines the probability of a particular letter being chosen
@@ -125,7 +124,7 @@ export function lowercaseLetters(density: Density): Thunk<string> {
   return Logic.oneOf(density, LOWERCASE_LETTERS);
 }
 
-/*
+/**
  * A fuzzer tha returns an uppercase latin letter
  *
  *  @param density A discrete density function that determines the probability of a particular letter being chosen
@@ -136,7 +135,7 @@ export function uppercaseLetters(density: Density): Thunk<string> {
   return Logic.oneOf(density, UPPERCASE_LETTERS);
 }
 
-/*
+/**
  * A fuzzer tha returns a latin letter
  *
  *  @param density A discrete density function that determines the probability of a particular letter being chosen
@@ -147,7 +146,7 @@ export function letters(density: Density): Thunk<string> {
   return Logic.oneOf(density, LETTERS);
 }
 
-/*
+/**
  * Chain several fuzzers into a string
  *
  * @param elems A list of fuzzers
@@ -156,35 +155,36 @@ export function letters(density: Density): Thunk<string> {
  */
 export function concat(...strings: Wrapped<string>[]): Thunk<string> {
   return () => {
-    return strings.map(str => unwrap(str)).join("");
+    return strings.map((str) => unwrap(str)).join("");
   };
 }
 
 type UnicodeCategoryData = {
-  range: number[],
-  hexrange: string[]
-  category: string
-}
-
+  range: number[];
+  hexrange: string[];
+  category: string;
+};
 
 function UnicodeCategory(category: string) {
-  const data:UnicodeCategoryData | undefined = UnicodeRanges.find(range => range.category === category);
+  const data: UnicodeCategoryData | undefined = UnicodeRanges.find((range) =>
+    range.category === category
+  );
 
-  if (typeof data == 'undefined') {
+  if (typeof data == "undefined") {
     throw new Error(`attempted to use unknown unicode category ${category}`);
   }
-  const range = data.range
+  const range = data.range;
 
-  return function(density: Density) {
+  return function (density: Density) {
     return () => {
-      const codePoint = unwrap(density(range[0], range[1]))
+      const codePoint = unwrap(density(range[0], range[1]));
 
-      return String.fromCharCode(codePoint)
-    }
-  }
+      return String.fromCharCode(codePoint);
+    };
+  };
 }
 
-/*
+/**
  * These fuzzers generate unicode characters from each unicode block
  */
 export const blocks = {
@@ -228,7 +228,9 @@ export const blocks = {
   ethiopic: UnicodeCategory("Ethiopic"),
   ethiopicSupplement: UnicodeCategory("Ethiopic Supplement"),
   cherokee: UnicodeCategory("Cherokee"),
-  unifiedCanadianAboriginalSyllabics: UnicodeCategory("Unified Canadian Aboriginal Syllabics"),
+  unifiedCanadianAboriginalSyllabics: UnicodeCategory(
+    "Unified Canadian Aboriginal Syllabics",
+  ),
   ogham: UnicodeCategory("Ogham"),
   runic: UnicodeCategory("Runic"),
   tagalog: UnicodeCategory("Tagalog"),
@@ -237,14 +239,18 @@ export const blocks = {
   tagbanwa: UnicodeCategory("Tagbanwa"),
   khmer: UnicodeCategory("Khmer"),
   mongolian: UnicodeCategory("Mongolian"),
-  unifiedCanadianAboriginalSyllabicsExtended: UnicodeCategory("Unified Canadian Aboriginal Syllabics Extended"),
+  unifiedCanadianAboriginalSyllabicsExtended: UnicodeCategory(
+    "Unified Canadian Aboriginal Syllabics Extended",
+  ),
   limbu: UnicodeCategory("Limbu"),
   taiLe: UnicodeCategory("Tai Le"),
   newTaiLue: UnicodeCategory("New Tai Lue"),
   khmerSymbols: UnicodeCategory("Khmer Symbols"),
   buginese: UnicodeCategory("Buginese"),
   taiTham: UnicodeCategory("Tai Tham"),
-  combiningDiacriticalMarksExtended: UnicodeCategory("Combining Diacritical Marks Extended"),
+  combiningDiacriticalMarksExtended: UnicodeCategory(
+    "Combining Diacritical Marks Extended",
+  ),
   balinese: UnicodeCategory("Balinese"),
   sundanese: UnicodeCategory("Sundanese"),
   batak: UnicodeCategory("Batak"),
@@ -253,14 +259,20 @@ export const blocks = {
   sundaneseSupplement: UnicodeCategory("Sundanese Supplement"),
   vedicExtensions: UnicodeCategory("Vedic Extensions"),
   phoneticExtensions: UnicodeCategory("Phonetic Extensions"),
-  phoneticExtensionsSupplement: UnicodeCategory("Phonetic Extensions Supplement"),
-  combiningDiacriticalMarksSupplement: UnicodeCategory("Combining Diacritical Marks Supplement"),
+  phoneticExtensionsSupplement: UnicodeCategory(
+    "Phonetic Extensions Supplement",
+  ),
+  combiningDiacriticalMarksSupplement: UnicodeCategory(
+    "Combining Diacritical Marks Supplement",
+  ),
   latinExtendedAdditional: UnicodeCategory("Latin Extended Additional"),
   greekExtended: UnicodeCategory("Greek Extended"),
   generalPunctuation: UnicodeCategory("General Punctuation"),
   superscriptsAndSubscripts: UnicodeCategory("Superscripts and Subscripts"),
   currencySymbols: UnicodeCategory("Currency Symbols"),
-  combiningDiacriticalMarksForSymbols: UnicodeCategory("Combining Diacritical Marks for Symbols"),
+  combiningDiacriticalMarksForSymbols: UnicodeCategory(
+    "Combining Diacritical Marks for Symbols",
+  ),
   letterlikeSymbols: UnicodeCategory("Letterlike Symbols"),
   numberForms: UnicodeCategory("Number Forms"),
   arrows: UnicodeCategory("Arrows"),
@@ -274,13 +286,21 @@ export const blocks = {
   geometricShapes: UnicodeCategory("Geometric Shapes"),
   miscellaneousSymbols: UnicodeCategory("Miscellaneous Symbols"),
   dingbats: UnicodeCategory("Dingbats"),
-  miscellaneousMathematicalSymbolsA: UnicodeCategory("Miscellaneous Mathematical Symbols-A"),
+  miscellaneousMathematicalSymbolsA: UnicodeCategory(
+    "Miscellaneous Mathematical Symbols-A",
+  ),
   supplementalArrowsA: UnicodeCategory("Supplemental Arrows-A"),
   braillePatterns: UnicodeCategory("Braille Patterns"),
   supplementalArrowsB: UnicodeCategory("Supplemental Arrows-B"),
-  miscellaneousMathematicalSymbolsB: UnicodeCategory("Miscellaneous Mathematical Symbols-B"),
-  supplementalMathematicalOperators: UnicodeCategory("Supplemental Mathematical Operators"),
-  miscellaneousSymbolsAndArrows: UnicodeCategory("Miscellaneous Symbols and Arrows"),
+  miscellaneousMathematicalSymbolsB: UnicodeCategory(
+    "Miscellaneous Mathematical Symbols-B",
+  ),
+  supplementalMathematicalOperators: UnicodeCategory(
+    "Supplemental Mathematical Operators",
+  ),
+  miscellaneousSymbolsAndArrows: UnicodeCategory(
+    "Miscellaneous Symbols and Arrows",
+  ),
   glagolitic: UnicodeCategory("Glagolitic"),
   latinExtendedC: UnicodeCategory("Latin Extended-C"),
   coptic: UnicodeCategory("Coptic"),
@@ -291,7 +311,9 @@ export const blocks = {
   supplementalPunctuation: UnicodeCategory("Supplemental Punctuation"),
   cJKRadicalsSupplement: UnicodeCategory("CJK Radicals Supplement"),
   kangxiRadicals: UnicodeCategory("Kangxi Radicals"),
-  ideographicDescriptionCharacters: UnicodeCategory("Ideographic Description Characters"),
+  ideographicDescriptionCharacters: UnicodeCategory(
+    "Ideographic Description Characters",
+  ),
   cJKSymbolsAndPunctuation: UnicodeCategory("CJK Symbols and Punctuation"),
   hiragana: UnicodeCategory("Hiragana"),
   katakana: UnicodeCategory("Katakana"),
@@ -301,9 +323,13 @@ export const blocks = {
   bopomofoExtended: UnicodeCategory("Bopomofo Extended"),
   cJKStrokes: UnicodeCategory("CJK Strokes"),
   katakanaPhoneticExtensions: UnicodeCategory("Katakana Phonetic Extensions"),
-  enclosedCJKLettersAndMonths: UnicodeCategory("Enclosed CJK Letters and Months"),
+  enclosedCJKLettersAndMonths: UnicodeCategory(
+    "Enclosed CJK Letters and Months",
+  ),
   cJKCompatibility: UnicodeCategory("CJK Compatibility"),
-  cJKUnifiedIdeographsExtensionA: UnicodeCategory("CJK Unified Ideographs Extension A"),
+  cJKUnifiedIdeographsExtensionA: UnicodeCategory(
+    "CJK Unified Ideographs Extension A",
+  ),
   yijingHexagramSymbols: UnicodeCategory("Yijing Hexagram Symbols"),
   cJKUnifiedIdeographs: UnicodeCategory("CJK Unified Ideographs"),
   yiSyllables: UnicodeCategory("Yi Syllables"),
@@ -408,7 +434,9 @@ export const blocks = {
   warangCiti: UnicodeCategory("Warang Citi"),
   pauCinHau: UnicodeCategory("Pau Cin Hau"),
   cuneiform: UnicodeCategory("Cuneiform"),
-  cuneiformNumbersAndPunctuation: UnicodeCategory("Cuneiform Numbers and Punctuation"),
+  cuneiformNumbersAndPunctuation: UnicodeCategory(
+    "Cuneiform Numbers and Punctuation",
+  ),
   earlyDynasticCuneiform: UnicodeCategory("Early Dynastic Cuneiform"),
   egyptianHieroglyphs: UnicodeCategory("Egyptian Hieroglyphs"),
   anatolianHieroglyphs: UnicodeCategory("Anatolian Hieroglyphs"),
@@ -422,28 +450,40 @@ export const blocks = {
   shorthandFormatControls: UnicodeCategory("Shorthand Format Controls"),
   byzantineMusicalSymbols: UnicodeCategory("Byzantine Musical Symbols"),
   musicalSymbols: UnicodeCategory("Musical Symbols"),
-  ancientGreekMusicalNotation: UnicodeCategory("Ancient Greek Musical Notation"),
+  ancientGreekMusicalNotation: UnicodeCategory(
+    "Ancient Greek Musical Notation",
+  ),
   taiXuanJingSymbols: UnicodeCategory("Tai Xuan Jing Symbols"),
   countingRodNumerals: UnicodeCategory("Counting Rod Numerals"),
-  mathematicalAlphanumericSymbols: UnicodeCategory("Mathematical Alphanumeric Symbols"),
+  mathematicalAlphanumericSymbols: UnicodeCategory(
+    "Mathematical Alphanumeric Symbols",
+  ),
   suttonSignWriting: UnicodeCategory("Sutton SignWriting"),
   mendekikak: UnicodeCategory("Mende Kikakui"),
-  arabicMathematicalAlphabeticSymbols: UnicodeCategory("Arabic Mathematical Alphabetic Symbols"),
+  arabicMathematicalAlphabeticSymbols: UnicodeCategory(
+    "Arabic Mathematical Alphabetic Symbols",
+  ),
   mahjongTiles: UnicodeCategory("Mahjong Tiles"),
   dominoTiles: UnicodeCategory("Domino Tiles"),
   playingCards: UnicodeCategory("Playing Cards"),
-  enclosedAlphanumericSupplement: UnicodeCategory("Enclosed Alphanumeric Supplement"),
-  enclosedIdeographicSupplement: UnicodeCategory("Enclosed Ideographic Supplement"),
-  miscellaneousSymbolsAndPictographs: UnicodeCategory("Miscellaneous Symbols and Pictographs"),
+  enclosedAlphanumericSupplement: UnicodeCategory(
+    "Enclosed Alphanumeric Supplement",
+  ),
+  enclosedIdeographicSupplement: UnicodeCategory(
+    "Enclosed Ideographic Supplement",
+  ),
+  miscellaneousSymbolsAndPictographs: UnicodeCategory(
+    "Miscellaneous Symbols and Pictographs",
+  ),
   emoticons: UnicodeCategory("Emoticons (Emoji)"),
   ornamentalDingbats: UnicodeCategory("Ornamental Dingbats"),
   transportAndMapSymbols: UnicodeCategory("Transport and Map Symbols"),
   alchemicalSymbols: UnicodeCategory("Alchemical Symbols"),
   geometricShapesExtended: UnicodeCategory("Geometric Shapes Extended"),
   supplementalArrowsC: UnicodeCategory("Supplemental Arrows-C"),
-  supplementalSymbolsAndPictographs: UnicodeCategory("Supplemental Symbols and Pictographs")
-}
+  supplementalSymbolsAndPictographs: UnicodeCategory(
+    "Supplemental Symbols and Pictographs",
+  ),
+};
 
-export const categories = {
-
-}
+export const categories = {};

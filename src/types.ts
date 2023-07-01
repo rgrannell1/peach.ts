@@ -1,4 +1,3 @@
-
 // A zero-argument function that returns a value of type T
 export type Thunk<T> = () => T;
 
@@ -7,7 +6,7 @@ export type Thunk<T> = () => T;
 // - A thunk that returns a value of type T
 export type Wrapped<T> = T | Thunk<T>;
 
-/*
+/**
  * Unwrap a wrapped value into its underlying type T
  *
  * Note that the type T cannot by a function, as Peach treats all functions
@@ -20,21 +19,21 @@ export function unwrap<T>(val: Wrapped<T>): T {
   return typeof val === "function" ? (val as Thunk<T>)() : val;
 }
 
-/*
+/**
  * Given a function that works for the underlying type T, return a function that
-  * works for the wrapped type Wrapped<T>
-  *
-  * @param fn A function that works for the underlying type T
-  *
-  * @returns A function that works for the wrapped type Wrapped<T>
-  */
+ * works for the wrapped type Wrapped<T>
+ *
+ * @param fn A function that works for the underlying type T
+ *
+ * @returns A function that works for the wrapped type Wrapped<T>
+ */
 export function fmap<T, K>(fn: (t0: T) => K): (t1: Wrapped<T>) => K {
   return (t1: Wrapped<T>) => {
     return fn(unwrap(t1));
   };
 }
 
-/*
+/**
  * Density functions take a lower and upper bound as wrapped values, and return
  * a wrapped value that is a number within that range
  *

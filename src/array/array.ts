@@ -1,9 +1,8 @@
 import type { Thunk, Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
 
-/*
+/**
  * Construct an array from a wrapped element and wrapped array-length
- *
  */
 export function from<T>(elem: Wrapped<T>, size: Wrapped<number>): Thunk<T[]> {
   return (): T[] => {
@@ -18,7 +17,7 @@ export function from<T>(elem: Wrapped<T>, size: Wrapped<number>): Thunk<T[]> {
   };
 }
 
-/*
+/**
  * Chain several fuzzers into a sequence, without flattening the result
  *
  * @param elems A list of fuzzers
@@ -27,6 +26,6 @@ export function from<T>(elem: Wrapped<T>, size: Wrapped<number>): Thunk<T[]> {
  */
 export function concat<T>(...elems: Wrapped<T>[]): Thunk<T[]> {
   return () => {
-    return elems.map(elem => unwrap(elem));
+    return elems.map((elem) => unwrap(elem));
   };
 }

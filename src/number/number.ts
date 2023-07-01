@@ -1,7 +1,7 @@
 import type { Thunk, Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
 
-/*
+/**
  * Return a random integer in the chosen range. The distribution is
  * uniform (pseudo RNG willing).
  *
@@ -22,7 +22,7 @@ export function uniform(
   };
 }
 
-/*
+/**
  * Return a random float in the chosen range. The distribution is
  * uniform (pseudo RNG willing).
  *

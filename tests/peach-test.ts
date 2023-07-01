@@ -33,12 +33,12 @@ Deno.test({
 Deno.test({
   name: "Uniform | Always in range",
   fn() {
-    let upper = Peach.Number.uniform(0, 10);
+    const upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
-      let sizeTgt = upper();
-      let random = Peach.Number.uniform(0, sizeTgt);
-      let val = random();
+      const sizeTgt = upper();
+      const random = Peach.Number.uniform(0, sizeTgt);
+      const val = random();
 
       if (val < 0 || val > sizeTgt) {
         throw new Error(`out of range 0...${sizeTgt}: ${val}`);
@@ -61,12 +61,12 @@ Deno.test({
 Deno.test({
   name: "UniformContinous | Always in range",
   fn() {
-    let upper = Peach.Number.uniform(0, 10);
+    const upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
-      let sizeTgt = upper();
-      let random = Peach.Number.uniformContinuous(0, sizeTgt);
-      let val = random();
+      const sizeTgt = upper();
+      const random = Peach.Number.uniformContinuous(0, sizeTgt);
+      const val = random();
 
       if (val < 0 || val > sizeTgt) {
         throw new Error(`out of range 0...${sizeTgt}: ${val}`);
@@ -78,12 +78,12 @@ Deno.test({
 Deno.test({
   name: "Array.from | constructs expected size",
   fn() {
-    let upper = Peach.Number.uniform(0, 10);
+    const upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
-      let sizeTgt = upper();
-      let random = Peach.Array.from(0, sizeTgt);
-      let val = random();
+      const sizeTgt = upper();
+      const random = Peach.Array.from(0, sizeTgt);
+      const val = random();
 
       if (val.length > sizeTgt) {
         throw new Error(`out of range 0...${sizeTgt}: ${val}`);
@@ -103,7 +103,6 @@ Deno.test({
       } else {
         throw err;
       }
-      return;
     }
 
     throw new Error("failed to fail!");
@@ -127,12 +126,12 @@ Deno.test({
 Deno.test({
   name: "String.from | Constructs string of expected size",
   fn() {
-    let upper = Peach.Number.uniform(0, 10);
+    const upper = Peach.Number.uniform(0, 10);
 
     for (let idx = 0; idx < 1_000; idx++) {
-      let sizeTgt = upper();
-      let random = Peach.String.from("a", sizeTgt);
-      let val = random();
+      const sizeTgt = upper();
+      const random = Peach.String.from("a", sizeTgt);
+      const val = random();
 
       if (val.length > sizeTgt) {
         throw new Error(`out of range 0...${sizeTgt}: ${val}`);
@@ -144,12 +143,9 @@ Deno.test({
 Deno.test({
   name: "String.digit | Construct a single digit",
   fn() {
-    let upper = Peach.Number.uniform(0, 10);
-
     for (let idx = 0; idx < 1_000; idx++) {
-      let sizeTgt = upper();
-      let random = Peach.String.digit(Peach.Number.uniform);
-      let val = random();
+      const random = Peach.String.digit(Peach.Number.uniform);
+      const val = random();
 
       if (val.length > 1) {
         throw new Error("too many digits returned");
@@ -161,12 +157,9 @@ Deno.test({
 Deno.test({
   name: "String.nonZeroDigit | Construct a single digit",
   fn() {
-    let upper = Peach.Number.uniform(0, 10);
-
     for (let idx = 0; idx < 1_000; idx++) {
-      let sizeTgt = upper();
-      let random = Peach.String.nonZeroDigit(Peach.Number.uniform);
-      let val = random();
+      const random = Peach.String.nonZeroDigit(Peach.Number.uniform);
+      const val = random();
 
       if (val.length > 1) {
         throw new Error("too many digits returned");
@@ -199,7 +192,7 @@ Deno.test({
       Peach.Number.uniform(0, 100),
     );
 
-    const val = gen();
+    gen();
   },
 });
 

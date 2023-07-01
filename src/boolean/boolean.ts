@@ -1,7 +1,7 @@
 import type { Density } from "../types.ts";
 import { unwrap } from "../types.ts";
 
-/*
+/**
  * A fuzzer that always returns true
  */
 export function truth() {
@@ -10,7 +10,7 @@ export function truth() {
   };
 }
 
-/*
+/**
  * A fuzzer that always returns false
  */
 export function falsity() {
@@ -19,7 +19,7 @@ export function falsity() {
   };
 }
 
-/*
+/**
  * A fuzzer that returns a random boolean
  *
  * @param density A discrete density function that determines the probability of a particular element being chosen
