@@ -10,6 +10,19 @@ import {
   UPPERCASE_LETTERS,
 } from "../src/constants.ts";
 
+
+
+
+
+const hangulChars = Peach.String.from(
+  Peach.String.blocks.hangulSyllables(Peach.Number.uniform), 5);
+
+const sentence = Peach.Array.from(
+  Peach.String.concat("here are five hangul characters: ", hangulChars),
+  10);
+
+
+
 Deno.test({
   name: "K | Constant-function returns same value supplied",
   fn() {
