@@ -165,6 +165,15 @@ type UnicodeCategoryData = {
   category: string;
 };
 
+function fixedFromCharCode (codePt) {
+  if (codePt > 0xFFFF) {
+      codePt -= 0x10000;
+      return String.fromCharCode(0xD800 + (codePt >> 10), 0xDC00 + (codePt & 0x3FF));
+  } else {
+      return String.fromCharCode(codePt);
+  }
+}
+
 function UnicodeCategory(category: string) {
   const data: UnicodeCategoryData | undefined = UnicodeRanges.find((range) =>
     range.category === category
@@ -179,7 +188,7 @@ function UnicodeCategory(category: string) {
     return () => {
       const codePoint = unwrap(density(range[0], range[1]));
 
-      return String.fromCharCode(codePoint);
+      return fixedFromCharCode(codePoint);
     };
   };
 }

@@ -1,3 +1,3 @@
 #! /usr/bin/env zsh
 
-deno test tests/*-test.ts
+deno test src/*/*.test.ts

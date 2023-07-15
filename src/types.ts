@@ -46,3 +46,17 @@ export type Density = (
   from: Wrapped<number>,
   to: Wrapped<number>,
 ) => Wrapped<number>;
+
+export type StateMachineResult<T> = {
+  state: string;
+  value: T;
+};
+
+export type StateMachine<T> = {
+  states: {
+    [state: string]: (value: T) => StateMachineResult<T>;
+  };
+} & {
+  terminal_states: string[];
+  initial_state: string;
+};

@@ -42,3 +42,34 @@ export function uniformContinuous(
     return Math.random() * (upper - lower) + lower;
   };
 }
+
+/**
+ * Return each integer in the chosen range in turn. This fuzzer is unusual,
+ * in that it only invokes `from`, `to` ONCE as opposed to per iteration. It is
+ * a stateful fuzzer.
+ *
+ * @param from A wrapped integer that represents the lower bound of the range
+ * @param to A wrapped integer that represents the upper bound of the range
+ *
+ * @returns A thunk that returns a random integer in the chosen range
+ */
+export function enumerate(
+  from: Wrapped<number>,
+  to: Wrapped<number>,
+): Thunk<number> {
+  const concreteFrom = unwrap(from);
+  const concreteTo = unwrap(to);
+
+  let idx = concreteFrom;
+
+  return () => {
+    const returned = idx;
+
+    idx++;
+    if (idx >= concreteTo) {
+      idx = concreteFrom;
+    }
+
+    return returned;
+  };
+}

@@ -10,7 +10,8 @@ Deno Repository: <https://deno.land/x/peach_ts>
 import * as Peach from "https://deno.land/x/peach_ts/src/mod.ts";
 ```
 
-See <https://rgrannell.xyz/posts/composable-fuzz-testing.html> for details & motivation.
+See <https://rgrannell.xyz/posts/composable-fuzz-testing.html> for details &
+motivation.
 
 ---
 
@@ -18,11 +19,14 @@ Peach stacks small fuzzing-functions into larger structures.
 
 ```ts
 const hangulChars = Peach.String.from(
-  Peach.String.blocks.hangulSyllables(Peach.Number.uniform), 5);
+  Peach.String.blocks.hangulSyllables(Peach.Number.uniform),
+  5,
+);
 
 const sentences = Peach.Array.from(
   Peach.String.concat("here are five hangul characters: ", hangulChars),
-  10);
+  10,
+);
 ```
 
 ```ts
@@ -36,8 +40,8 @@ const sentences = Peach.Array.from(
   "here are five hangul characters: 쯠솟쮈칺쿂",
   "here are five hangul characters: 춦싁뮦듕쩧",
   "here are five hangul characters: 받빔쑚끿턆",
-  "here are five hangul characters: 욯뻷춖먙녊"
-]
+  "here are five hangul characters: 욯뻷춖먙녊",
+];
 ```
 
 Peach supports the following operations:
@@ -45,37 +49,48 @@ Peach supports the following operations:
 - `Peach.Array.*`: construct arrays from other fuzzers
 - `Peach.Boolean.*`: generate boolean values
 - `Peach.Logic.*`: join other combinators into bigger combinators
-- `Peach.Number.*`: generate numbers within a range, according to a probability-density function
+- `Peach.Number.*`: generate numbers within a range, according to a
+  probability-density function
 - `Peach.Object.*`: construct objects from other fuzzers
 - `Peach.Set.*`: construct sets from other fuzzers
-- `Peach.String.*`: construct strings from unicode character ranges, and simple fuzzers like lowercase letters and spaces
+- `Peach.String.*`: construct strings from unicode character ranges, and simple
+  fuzzers like lowercase letters and spaces
 
-Many peach fuzzers are parameterised. For example, `Peach.Object.from` constructs an object from three subfuzzers; key, value, size. Parameters can be fixed values
+Many peach fuzzers are parameterised. For example, `Peach.Object.from`
+constructs an object from three subfuzzers; key, value, size. Parameters can be
+fixed values
 
 ```ts
-Peach.Object.from('one-key', 'just-one-value', 1);
+Peach.Object.from("one-key", "just-one-value", 1);
 ```
 
 or fuzzers
 
 ```ts
-Peach.Object.from(Peach.String.letters, Peach.Boolean.truth, Peach.Number.uniform(0, 10));
+Peach.Object.from(
+  Peach.String.letters,
+  Peach.Boolean.truth,
+  Peach.Number.uniform(0, 10),
+);
 ```
 
-Fuzzing ultimately involves selecting values probabilistically. Peach controls this selection using `density` functions as parameters.
+Fuzzing ultimately involves selecting values probabilistically. Peach controls
+this selection using `density` functions as parameters.
 
 ```ts
 const density = () => {
   return Math.random() > 0.9 ? 0 : 1;
-}
+};
 
 Peach.Logic.oneOf(density, [
-  'rare',
-  'common'
-])()
+  "rare",
+  "common",
+])();
 ```
 
-Peach includes two density-function constructors; `Peach.Number.uniform(from, to)` and `Peach.Number.uniformContinuous(from, to)` which create integers / floats uniformly over a range.
+Peach includes two density-function constructors;
+`Peach.Number.uniform(from, to)` and `Peach.Number.uniformContinuous(from, to)`
+which create integers / floats uniformly over a range.
 
 ## License
 
