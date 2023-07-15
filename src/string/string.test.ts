@@ -4,11 +4,7 @@ import {
 } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
 import * as Peach from "../mod.ts";
-import {
-  LETTERS,
-  LOWERCASE_LETTERS,
-  UPPERCASE_LETTERS,
-} from "../constants.ts";
+import { LETTERS, LOWERCASE_LETTERS, UPPERCASE_LETTERS } from "../constants.ts";
 
 Deno.test({
   name: "String.from | Constructs string of expected size",
@@ -114,5 +110,19 @@ Deno.test({
       assertEquals(letter.length, 1);
       assert(LETTERS.includes(letter));
     }
+  },
+});
+
+Deno.test({
+  name: "String.hyphen | runs expected value",
+  fn() {
+    assertEquals(Peach.String.hyphen()(), "-");
+  },
+});
+
+Deno.test({
+  name: "String.underscore | runs expected value",
+  fn() {
+    assertEquals(Peach.String.underscore()(), "_");
   },
 });
