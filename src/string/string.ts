@@ -165,6 +165,13 @@ type UnicodeCategoryData = {
   category: string;
 };
 
+/*
+ * fromCharCode fails for code-points above 0xFFFF
+ *
+ * @param codePt A code-point
+ *
+ * @returns A string representation of the code-point
+ */
 function fixedFromCharCode (codePt: number) {
   if (codePt > 0xFFFF) {
       codePt -= 0x10000;
