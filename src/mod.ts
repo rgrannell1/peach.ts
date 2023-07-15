@@ -13,7 +13,7 @@ export * as Set from "./set/set.ts";
 export * as String from "./string/string.ts";
 export * as Object from "./object/object.ts";
 export * as Boolean from "./boolean/boolean.ts";
-export * as StateMachine from "./state_machine/state_machine.ts";
+//export * as StateMachine from "./state_machine/state_machine.ts";
 
 export type { Density, Thunk, Wrapped } from "./types.ts";
 
