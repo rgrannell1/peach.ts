@@ -1,3 +1,7 @@
+import {
+  assert,
+  assertEquals,
+} from "https://deno.land/std@0.160.0/testing/asserts.ts";
 import * as Peach from "../mod.ts";
 
 const hangulChars = Peach.String.from(
@@ -5,13 +9,8 @@ const hangulChars = Peach.String.from(
   5,
 );
 
-const sentence = Peach.Array.from(
-  Peach.String.concat("here are five hangul characters: ", hangulChars),
-  10,
-);
-
 Deno.test({
-  name: "OneOf | Fails for empty collections",
+  name: "Peach.Logic.oneOf | Fails for empty collections",
   fn() {
     try {
       Peach.Logic.oneOf(Peach.Number.uniform, [])();
@@ -24,5 +23,20 @@ Deno.test({
     }
 
     throw new Error("failed to fail!");
+  },
+});
+
+
+Deno.test({
+  name: "Peach.Logic.mapped | Identical for identity function",
+  fn() {
+
+    for (let idx = 0; idx < 1_000; idx++) {
+      const chars = hangulChars();
+
+      const transformed = Peach.Logic.mapped((x: string) => x, chars)()
+
+      assertEquals(transformed, chars);
+    }
   },
 });
