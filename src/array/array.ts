@@ -30,6 +30,14 @@ export function concat<T>(...elems: Wrapped<T>[]): Thunk<T[]> {
   };
 }
 
+/*
+ * Given a list of fuzzers, and a density function, retrieve a subset of elements
+ *
+ * @param elems A list of fuzzers
+ * @param density A function that takes a min and max, and returns a BigInt
+ *
+ * @returns A thunk that returns a subset of the umwrapped fuzzers
+ */
 export function choose<T>(elems: Wrapped<T[]>, density: DensityBigInt): Thunk<T[]> {
   return () => {
     const concreteElems = unwrap(elems);
