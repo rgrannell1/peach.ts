@@ -61,6 +61,8 @@ export type DensityBigInt = (
   to: Wrapped<bigint>,
 ) => Wrapped<bigint>;
 
+export type Key = string | number | symbol;
+
 export type StateMachineResult<T> = {
   state: string;
   value: T;

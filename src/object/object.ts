@@ -1,4 +1,4 @@
-import type { Thunk, Wrapped } from "../types.ts";
+import type { Thunk, Wrapped, Key, DensityBigInt } from "../types.ts";
 import { unwrap } from "../types.ts";
 
 /**
@@ -12,7 +12,7 @@ import { unwrap } from "../types.ts";
  *   that size is an upper-limit; if key yields duplicate values, the resulting object will have fewer
  *   properties
  */
-export function from<K extends string | number | symbol, V>(
+export function from<K extends Key, V>(
   key: Wrapped<K>,
   val: Wrapped<V>,
   size: Wrapped<number>,
@@ -27,4 +27,37 @@ export function from<K extends string | number | symbol, V>(
 
     return record;
   };
+}
+
+
+/*
+ * Given a object of keys: fuzzers, and a density function, retrieve a subset of elements
+ *
+ * @param elems A object of keys: fuzzers
+ * @param density A function that takes a min and max, and returns a BigInt
+ *
+ * @returns A thunk that returns a subset of the umwrapped fuzzers
+ */
+export function choose<K extends Key, V>(obj: Wrapped<Record<K, V>>, density: DensityBigInt) {
+  return () => {
+    const concreteElems = Object.entries(unwrap(obj)) as [K, V][];
+    const subsetCount = BigInt(2) ^ BigInt(concreteElems.length);
+    const index = unwrap(density(BigInt(0), subsetCount));
+
+    // bits correspond to a include-or-don't for each element
+    const bits = index
+      .toString(2)
+      .padStart(concreteElems.length, "0")
+      .split("");
+
+    const subset: [K, V][] = [];
+
+    for (let idx = 0; idx < bits.length; idx++) {
+      if (bits[idx] === "1") {
+        subset.push(concreteElems[idx]);
+      }
+    }
+
+    return Object.fromEntries(subset);
+  }
 }
