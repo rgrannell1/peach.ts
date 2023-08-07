@@ -51,6 +51,8 @@ Peach supports the following operations:
 - `Peach.Logic.*`: join other combinators into bigger combinators
 - `Peach.Number.*`: generate numbers within a range, according to a
   probability-density function
+- `Peach.BigInt.*`: generate numbers within a range, according to a
+  probability-density function
 - `Peach.Object.*`: construct objects from other fuzzers
 - `Peach.Set.*`: construct sets from other fuzzers
 - `Peach.String.*`: construct strings from unicode character ranges, and simple

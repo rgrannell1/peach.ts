@@ -126,3 +126,12 @@ Deno.test({
     assertEquals(Peach.String.underscore()(), "_");
   },
 });
+
+Deno.test({
+  name: "String.unicode | runs without error",
+  fn() {
+    for (let idx = 0; idx < 1_000; idx++) {
+      Peach.String.unicode(Peach.Number.uniform)();
+    }
+  },
+});
