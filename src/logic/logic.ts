@@ -9,7 +9,7 @@ import { unwrap } from "../types.ts";
  *
  * @returns A generator function that returns a random element from an array-fuzzer
  */
-export function oneOf<T>(density: Density, elems: Wrapped<T[]>) {
+export function oneOf<T>(density: Density, elems: Wrapped<(Wrapped<T>)[]>) {
   return (): T => {
     const data = unwrap(elems);
     const idx = unwrap(density(0, data.length));
@@ -18,7 +18,7 @@ export function oneOf<T>(density: Density, elems: Wrapped<T[]>) {
       throw new Error("Cannot retrieve value from empty collection");
     }
 
-    return data[idx];
+    return unwrap(data[idx]);
   };
 }
 
