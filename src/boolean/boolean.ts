@@ -1,5 +1,5 @@
 import type { Density } from "../types.ts";
-import { unwrap } from "../types.ts";
+import * as Logic from "../logic/logic.ts";
 
 /**
  * A fuzzer that always returns true
@@ -26,6 +26,6 @@ export function falsity() {
  */
 export function oneOf(density: Density) {
   return (): boolean => {
-    return unwrap(density(0, 1)) === 0;
+    return Logic.oneOf(density, [true, false])();
   };
 }
