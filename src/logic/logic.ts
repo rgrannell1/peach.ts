@@ -23,6 +23,22 @@ export function oneOf<T>(density: Density, elems: Wrapped<(Wrapped<T>)[]>) {
 }
 
 /**
+ * A fuzzer that unwraps each fuzzer provided in a list, returning an unwrapped list
+ *
+ * @param density A discrete density function that determines the probability of a particular element being chosen
+ * @param elems An array-fuzzer
+ *
+ * @returns A generator function that returns a random element from an array-fuzzer
+ */
+export function allOf<T>(elems: Wrapped<Wrapped<T>[]>) {
+  return (): T[] => {
+    const data = unwrap(elems);
+
+    return data.map((elem) => unwrap(elem));
+  };
+}
+
+/**
  * A fuzzer that returns a random key from an object-fuzzer
  *
  * @param density A discrete density function that determines the probability of a particular element being chosen

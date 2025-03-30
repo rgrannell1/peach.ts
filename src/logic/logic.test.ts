@@ -1,6 +1,4 @@
-import {
-  assertEquals,
-} from "https://deno.land/std@0.160.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 import * as Peach from "../mod.ts";
 
 const hangulChars = Peach.String.from(
@@ -22,6 +20,32 @@ Deno.test({
     }
 
     throw new Error("failed to fail!");
+  },
+});
+
+Deno.test({
+  name: "Peach.Logic.allOf | Returns empty list for empty collections",
+  fn() {
+    const result = Peach.Logic.allOf([])();
+
+    assertEquals(result, []);
+  },
+});
+
+Deno.test({
+  name: "Peach.Logic.allOf | returns as many elements as expected",
+  fn() {
+    const parts = Peach.Array.from(
+      hangulChars,
+      Peach.Number.uniform(0, 10),
+    );
+
+    for (let idx = 0; idx < 1_00; idx++) {
+      const elems = parts();
+      const result = Peach.Logic.allOf(elems)();
+
+      assertEquals(result.length, elems.length);
+    }
   },
 });
 
