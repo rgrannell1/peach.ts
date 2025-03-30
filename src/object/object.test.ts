@@ -19,8 +19,8 @@ Deno.test({
     const objects = Peach.Object.from(
       Peach.String.letters(Peach.Number.uniform),
       () => 0,
-      10
-    )
+      10,
+    );
 
     for (let idx = 0; idx < 1_000; idx++) {
       const sample = objects();
@@ -32,5 +32,5 @@ Deno.test({
         }
       });
     }
-  }
-})
+  },
+});

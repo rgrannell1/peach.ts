@@ -5,7 +5,11 @@ import * as Peach from "../mod.ts";
 Deno.test({
   name: "Peach.BigInt.Uniform | Choosing 0...0 returns 0",
   fn() {
-    assertEquals(Peach.BigInt.uniform(0n, 0n)(), 0n, "uniform 0...0 must be zero");
+    assertEquals(
+      Peach.BigInt.uniform(0n, 0n)(),
+      0n,
+      "uniform 0...0 must be zero",
+    );
   },
 });
 

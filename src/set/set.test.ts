@@ -14,13 +14,13 @@ Deno.test({
   },
 });
 
-
 Deno.test({
   name: "Set.choose | returns a subset of the provided collection",
   fn() {
     const integers = Peach.Set.from(
       Peach.Number.uniform(0, 100),
-      Peach.Number.uniform(0, 100));
+      Peach.Number.uniform(0, 100),
+    );
 
     for (let idx = 0; idx < 1_000; idx++) {
       const sample = integers();
@@ -36,7 +36,7 @@ Deno.test({
         }
       }
     }
-  }
+  },
 });
 
 Deno.test({
@@ -44,7 +44,8 @@ Deno.test({
   fn() {
     const integers = Peach.Set.from(
       0,
-      Peach.Number.uniform(0, 100));
+      Peach.Number.uniform(0, 100),
+    );
 
     for (let idx = 0; idx < 1_000; idx++) {
       const sample = integers();
@@ -60,5 +61,5 @@ Deno.test({
         }
       }
     }
-  }
-})
+  },
+});

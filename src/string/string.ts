@@ -209,7 +209,6 @@ function unicodeCategory(category: string) {
  * @param density A discrete density function that determines the probability of a particular character being chosen
  *
  * @returns A thunk that returns a random unicode character
- *
  */
 export function unicode(density: Density) {
   return () => {

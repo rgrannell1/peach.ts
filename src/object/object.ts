@@ -1,4 +1,4 @@
-import type { Thunk, Wrapped, Key, DensityBigInt } from "../types.ts";
+import type { DensityBigInt, Key, Thunk, Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
 
 /**
@@ -29,7 +29,6 @@ export function from<K extends Key, V>(
   };
 }
 
-
 /*
  * Given a object of keys: fuzzers, and a density function, retrieve a subset of elements
  *
@@ -38,7 +37,10 @@ export function from<K extends Key, V>(
  *
  * @returns A thunk that returns a subset of the umwrapped fuzzers
  */
-export function choose<K extends Key, V>(obj: Wrapped<Record<K, V>>, density: DensityBigInt) {
+export function choose<K extends Key, V>(
+  obj: Wrapped<Record<K, V>>,
+  density: DensityBigInt,
+) {
   return () => {
     const concreteElems = Object.entries(unwrap(obj)) as [K, V][];
     const subsetCount = BigInt(2) ^ BigInt(concreteElems.length);
@@ -59,5 +61,5 @@ export function choose<K extends Key, V>(obj: Wrapped<Record<K, V>>, density: De
     }
 
     return Object.fromEntries(subset);
-  }
+  };
 }

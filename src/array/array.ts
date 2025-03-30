@@ -1,4 +1,4 @@
-import type { Thunk, Wrapped, DensityBigInt } from "../types.ts";
+import type { DensityBigInt, Thunk, Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
 
 /**
@@ -38,7 +38,10 @@ export function concat<T>(...elems: Wrapped<T>[]): Thunk<T[]> {
  *
  * @returns A thunk that returns a subset of the umwrapped fuzzers
  */
-export function choose<T>(elems: Wrapped<T[]>, density: DensityBigInt): Thunk<T[]> {
+export function choose<T>(
+  elems: Wrapped<T[]>,
+  density: DensityBigInt,
+): Thunk<T[]> {
   return () => {
     const concreteElems = unwrap(elems);
     const subsetCount = BigInt(2) ^ BigInt(concreteElems.length);
@@ -59,5 +62,5 @@ export function choose<T>(elems: Wrapped<T[]>, density: DensityBigInt): Thunk<T[
     }
 
     return output;
-  }
+  };
 }

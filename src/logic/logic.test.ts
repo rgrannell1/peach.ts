@@ -26,15 +26,13 @@ Deno.test({
   },
 });
 
-
 Deno.test({
   name: "Peach.Logic.mapped | Identical for identity function",
   fn() {
-
     for (let idx = 0; idx < 1_000; idx++) {
       const chars = hangulChars();
 
-      const transformed = Peach.Logic.mapped((x: string) => x, chars)()
+      const transformed = Peach.Logic.mapped((x: string) => x, chars)();
 
       assertEquals(transformed, chars);
     }

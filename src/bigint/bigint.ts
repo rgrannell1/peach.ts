@@ -23,7 +23,7 @@ export function uniform(
     if (diff > Number.MAX_SAFE_INTEGER) {
       throw new Error(
         `Range too large: ${lower}...${upper} (${diff} > ${Number.MAX_SAFE_INTEGER})`,
-      )
+      );
     }
 
     return BigInt(Math.floor(Math.random() * Number(diff))) + lower;

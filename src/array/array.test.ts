@@ -22,7 +22,8 @@ Deno.test({
   fn() {
     const integers = Peach.Array.from(
       Peach.Number.uniform(0, 100),
-      Peach.Number.uniform(0, 100));
+      Peach.Number.uniform(0, 100),
+    );
 
     for (let idx = 0; idx < 1_000; idx++) {
       const sample = integers();
@@ -38,7 +39,7 @@ Deno.test({
         }
       }
     }
-  }
+  },
 });
 
 Deno.test({
@@ -46,7 +47,8 @@ Deno.test({
   fn() {
     const integers = Peach.Array.from(
       0,
-      Peach.Number.uniform(0, 100));
+      Peach.Number.uniform(0, 100),
+    );
 
     for (let idx = 0; idx < 1_000; idx++) {
       const sample = integers();
@@ -62,5 +64,5 @@ Deno.test({
         }
       }
     }
-  }
-})
+  },
+});

@@ -48,14 +48,14 @@ export type Density = (
 ) => Wrapped<number>;
 
 /*
-* Density functions take a lower and upper bound as wrapped values, and return
-* a wrapped value that is a number within that range
-*
-* @param from A wrapped value that represents the lower bound
-* @param to A wrapped value that represents the upper bound
-*
-* @returns A wrapped value that is a number within the range [from, to]
-*/
+ * Density functions take a lower and upper bound as wrapped values, and return
+ * a wrapped value that is a number within that range
+ *
+ * @param from A wrapped value that represents the lower bound
+ * @param to A wrapped value that represents the upper bound
+ *
+ * @returns A wrapped value that is a number within the range [from, to]
+ */
 export type DensityBigInt = (
   from: Wrapped<bigint>,
   to: Wrapped<bigint>,
