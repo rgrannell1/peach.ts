@@ -1,4 +1,4 @@
-import type { DensityBigInt, Thunk, Wrapped } from "../types.ts";
+import type { Wrapped } from "../types.ts";
 import { unwrap } from "../types.ts";
 
 /**

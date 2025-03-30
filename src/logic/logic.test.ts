@@ -1,5 +1,4 @@
 import {
-  assert,
   assertEquals,
 } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 import * as Peach from "../mod.ts";

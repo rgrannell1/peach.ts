@@ -3,7 +3,7 @@ import { unwrap } from "../types.ts";
 import * as Logic from "../logic/logic.ts";
 
 import { LETTERS, LOWERCASE_LETTERS, UPPERCASE_LETTERS } from "../constants.ts";
-import UnicodeRanges from "../../data/unicode_ranges.json" assert {
+import UnicodeRanges from "../../data/unicode_ranges.json" with {
   type: "json",
 };
 

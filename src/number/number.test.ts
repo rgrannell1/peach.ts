@@ -2,11 +2,6 @@ import { assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
 import * as Peach from "../mod.ts";
 
-const hangulChars = Peach.String.from(
-  Peach.String.blocks.hangulSyllables(Peach.Number.uniform),
-  5,
-);
-
 Deno.test({
   name: "Peach.Number.Uniform | Choosing 0...0 returns 0",
   fn() {
