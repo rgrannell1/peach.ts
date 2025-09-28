@@ -1,4 +1,4 @@
-import { unwrap, type Thunk, type Wrapped } from "../types.ts";
+import { type Thunk, unwrap, type Wrapped } from "../types.ts";
 
 /**
  * Return a random date in the chosen range. The distribution is
@@ -30,7 +30,7 @@ export function uniform(
  * @returns A thunk that returns a random date in the chosen date range
  */
 export function pastUniform(
-  from: Wrapped<number>
+  from: Wrapped<number>,
 ): Thunk<Date> {
   return () => {
     const lower = unwrap(from);

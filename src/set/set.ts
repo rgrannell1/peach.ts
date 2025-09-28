@@ -61,3 +61,22 @@ export function choose<T>(
     return output;
   };
 }
+
+/**
+ * Chain several fuzzers into a sequence, set unioning terms
+ *
+ * @param elems A list of fuzzers
+ *
+ * @returns A thunk that returns an set of the results of each fuzzer
+ */
+export function concat<T>(...elems: Wrapped<T>[]): Thunk<Set<T>> {
+  return () => {
+    const output: Set<T> = new Set<T>();
+
+    for (const elem of elems) {
+      output.add(unwrap(elem));
+    }
+
+    return output;
+  };
+}
