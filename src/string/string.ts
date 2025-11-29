@@ -50,7 +50,7 @@ export function join(
     const parts: string[] = elems.map((elem) => unwrap(elem));
 
     return parts.join(sep);
-  }
+  };
 }
 
 /**
@@ -206,9 +206,7 @@ function fixedFromCharCode(codePt: number) {
 }
 
 function unicodeCategory(category: string) {
-  const data: UnicodeCategoryData | undefined = UnicodeRanges.find((range) =>
-    range.category === category
-  );
+  const data: UnicodeCategoryData | undefined = UnicodeRanges.find((range) => range.category === category);
 
   if (typeof data == "undefined") {
     throw new Error(`attempted to use unknown unicode category ${category}`);

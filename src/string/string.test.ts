@@ -1,7 +1,4 @@
-import {
-  assert,
-  assertEquals,
-} from "https://deno.land/std@0.160.0/testing/asserts.ts";
+import { assert, assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
 
 import * as Peach from "../mod.ts";
 import { LETTERS, LOWERCASE_LETTERS, UPPERCASE_LETTERS } from "../constants.ts";
@@ -139,19 +136,18 @@ Deno.test({
 Deno.test({
   name: "String.join | matches expected pattern",
   fn() {
-
     const str = Peach.String.join(
-      ',',
+      ",",
       Peach.String.digit(Peach.Number.uniform),
-      Peach.String.digit(Peach.Number.uniform)
-    )()
+      Peach.String.digit(Peach.Number.uniform),
+    )();
 
-    const parts = str.split(',');
+    const parts = str.split(",");
     assertEquals(parts.length, 2);
     for (const part of parts) {
       const num = Number(part);
       assert(!Number.isNaN(num));
       assert(num >= 0 && num <= 9);
     }
-  }
+  },
 });

@@ -12,7 +12,7 @@ Deno.test({
     try {
       Peach.Logic.oneOf(Peach.Number.uniform, [])();
     } catch (err) {
-      if (err.message.includes("Cannot retrieve value from empty collection")) {
+      if (err instanceof Error && err.message.includes("Cannot retrieve value from empty collection")) {
         return;
       } else {
         throw err;
