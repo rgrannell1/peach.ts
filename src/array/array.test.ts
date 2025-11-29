@@ -68,6 +68,42 @@ Deno.test({
 });
 
 Deno.test({
+  name: "Array.choose | returns empty array for empty array",
+  fn() {
+    const emptyArray: number[] = [];
+    const result = Peach.Array.choose(emptyArray, Peach.BigInt.uniform)();
+
+    if (result.length !== 0) {
+      throw new Error(`Expected empty array, got ${result.length} elements`);
+    }
+  },
+});
+
+Deno.test({
+  name: "Array.choose | returns subset of original array",
+  fn() {
+    const originalArray = [1, 2, 3, 4, 5];
+
+    for (let idx = 0; idx < 100; idx++) {
+      const result = Peach.Array.choose(originalArray, Peach.BigInt.uniform)();
+
+      // All elements in result should be from original array
+      for (const elem of result) {
+        if (!originalArray.includes(elem)) {
+          throw new Error(`Element ${elem} not in original array`);
+        }
+      }
+
+      // Result should not be larger than original
+      if (result.length > originalArray.length) {
+        throw new Error(`Subset larger than original: ${result.length} > ${originalArray.length}`);
+      }
+    }
+  },
+});
+
+
+Deno.test({
   name: "Array.intersperse | intersperses separator between elements",
   fn() {
     const result = Peach.Array.intersperse(",", "a", "b", "c")();
@@ -112,6 +148,36 @@ Deno.test({
 
     if (result[0] !== "1" || result[1] !== "|" || result[2] !== "2") {
       throw new Error(`Expected ["1", "|", "2"], got [${result.join(", ")}]`);
+    }
+  },
+});
+
+Deno.test({
+  name: "Array.concat | combines multiple elements",
+  fn() {
+    const result = Peach.Array.concat("a", "b", "c")();
+
+    if (result.length !== 3) {
+      throw new Error(`Expected length 3, got ${result.length}`);
+    }
+
+    if (result.join("") !== "abc") {
+      throw new Error(`Expected "abc", got "${result.join("")}"`);
+    }
+  },
+});
+
+Deno.test({
+  name: "Array.concat | works with single element",
+  fn() {
+    const result = Peach.Array.concat("single")();
+
+    if (result.length !== 1) {
+      throw new Error(`Expected length 1, got ${result.length}`);
+    }
+
+    if (result[0] !== "single") {
+      throw new Error(`Expected "single", got "${result[0]}"`);
     }
   },
 });
