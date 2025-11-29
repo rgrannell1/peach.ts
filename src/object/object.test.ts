@@ -80,11 +80,11 @@ Deno.test({
 Deno.test({
   name: "Object.choose | preserves key-value relationships",
   fn() {
-    const testObject = { 
-      name: "Alice", 
-      age: 30, 
+    const testObject = {
+      name: "Alice",
+      age: 30,
       city: "New York",
-      active: true 
+      active: true
     };
 
     for (let idx = 0; idx < 100; idx++) {
@@ -128,7 +128,7 @@ Deno.test({
     // Try many times to increase chance of getting full object
     for (let idx = 0; idx < 1000; idx++) {
       const result = Peach.Object.choose(testObject, Peach.BigInt.uniform)();
-      
+
       if (Object.keys(result).length === Object.keys(testObject).length) {
         // Check that it's actually the full object
         if (result.x === 10 && result.y === 20) {
@@ -153,7 +153,7 @@ Deno.test({
     // Try many times to increase chance of getting empty object
     for (let idx = 0; idx < 1000; idx++) {
       const result = Peach.Object.choose(testObject, Peach.BigInt.uniform)();
-      
+
       if (Object.keys(result).length === 0) {
         foundEmptyObject = true;
         break;
@@ -173,13 +173,13 @@ Deno.test({
 
     for (let idx = 0; idx < 100; idx++) {
       const result = Peach.Object.choose(singlePropObject, Peach.BigInt.uniform)();
-      
+
       // Should be either empty object or the single property
       const keys = Object.keys(result);
       if (keys.length > 1) {
         throw new Error(`Too many properties in result: ${keys.length}`);
       }
-      
+
       if (keys.length === 1) {
         if (keys[0] !== "solo" || result.solo !== "value") {
           throw new Error(`Incorrect property returned: ${JSON.stringify(result)}`);
