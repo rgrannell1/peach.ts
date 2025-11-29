@@ -32,6 +32,27 @@ export function from(
   };
 }
 
+/*
+ * Construct a joined string from a separator and several wrapped substrings
+ *
+ * @param separator A wrapped string to use as a separator
+ * @param elems A list of wrapped substrings to join
+ *
+ * @returns A thunk that returns a string with the chosen substrings joined
+ *   by the separator
+ */
+export function join(
+  separator: Wrapped<string>,
+  ...elems: Wrapped<string>[]
+) {
+  return (): string => {
+    const sep = unwrap(separator);
+    const parts: string[] = elems.map((elem) => unwrap(elem));
+
+    return parts.join(sep);
+  }
+}
+
 /**
  * Return a random digit
  *
