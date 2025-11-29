@@ -1,6 +1,7 @@
 # Peach.ts
 
 [![Test](https://github.com/rgrannell1/peach.ts/actions/workflows/test.yaml/badge.svg)](https://github.com/rgrannell1/peach.ts/actions/workflows/test.yaml)
+[![codecov](https://codecov.io/gh/rgrannell1/peach.ts/branch/main/graph/badge.svg)](https://codecov.io/gh/rgrannell1/peach.ts)
 
 Composable fuzz-testing.
 
