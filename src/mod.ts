@@ -14,7 +14,8 @@ export * as String from "./string/string.ts";
 export * as Object from "./object/object.ts";
 export * as Boolean from "./boolean/boolean.ts";
 export * as BigInt from "./bigint/bigint.ts";
-//export * as StateMachine from "./state_machine/state_machine.ts";
+export * as Date from "./date/date.ts";
+export * as Generator from "./generator/generator.ts";
 
 export type { Density, Thunk, Wrapped } from "./types.ts";
 

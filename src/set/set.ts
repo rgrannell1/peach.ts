@@ -41,7 +41,7 @@ export function choose<T>(
 ): Thunk<T[]> {
   return () => {
     const concreteElems = Array.from(unwrap(elems));
-    const subsetCount = BigInt(2) ^ BigInt(concreteElems.length);
+    const subsetCount = BigInt(2) ** BigInt(concreteElems.length);
     const index = unwrap(density(BigInt(0), subsetCount));
 
     // bits correspond to a include-or-don't for each element

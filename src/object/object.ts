@@ -43,7 +43,7 @@ export function choose<K extends Key, V>(
 ) {
   return () => {
     const concreteElems = Object.entries(unwrap(obj)) as [K, V][];
-    const subsetCount = BigInt(2) ^ BigInt(concreteElems.length);
+    const subsetCount = BigInt(2) ** BigInt(concreteElems.length);
     const index = unwrap(density(BigInt(0), subsetCount));
 
     // bits correspond to a include-or-don't for each element
