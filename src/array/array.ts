@@ -31,6 +31,30 @@ export function concat<T>(...elems: Wrapped<T>[]): Thunk<T[]> {
 }
 
 /*
+ * Chain several fuzzers into a sequence, interspersing a separator between each element
+ *
+ * @param separator A fuzzer that produces the separator element
+ * @param elems A list of fuzzers
+ *
+ * @returns A thunk that returns an array of the results of each fuzzer, with the separator interspersed
+ */
+export function intersperse<T>(separator: Wrapped<T>, ...elems: Wrapped<T>[]): Thunk<T[]> {
+  return () => {
+    const result: T[] = [];
+    const sep = unwrap(separator);
+
+    elems.forEach((elem, index) => {
+      result.push(unwrap(elem));
+      if (index < elems.length - 1) {
+        result.push(sep);
+      }
+    });
+
+    return result;
+  };
+}
+
+/*
  * Given a list of fuzzers, and a density function, retrieve a subset of elements
  *
  * @param elems A list of fuzzers

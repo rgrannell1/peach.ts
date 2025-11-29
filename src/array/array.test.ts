@@ -66,3 +66,52 @@ Deno.test({
     }
   },
 });
+
+Deno.test({
+  name: "Array.intersperse | intersperses separator between elements",
+  fn() {
+    const result = Peach.Array.intersperse(",", "a", "b", "c")();
+
+    if (result.length !== 5) {
+      throw new Error(`Expected length 5, got ${result.length}`);
+    }
+
+    if (result.join("") !== "a,b,c") {
+      throw new Error(`Expected "a,b,c", got "${result.join("")}"`);
+    }
+  },
+});
+
+Deno.test({
+  name: "Array.intersperse | works with single element",
+  fn() {
+    const result = Peach.Array.intersperse("-", "single")();
+
+    if (result.length !== 1) {
+      throw new Error(`Expected length 1, got ${result.length}`);
+    }
+
+    if (result[0] !== "single") {
+      throw new Error(`Expected "single", got "${result[0]}"`);
+    }
+  },
+});
+
+Deno.test({
+  name: "Array.intersperse | works with wrapped values",
+  fn() {
+    const sepThunk = () => "|";
+    const elem1Thunk = () => "1";
+    const elem2Thunk = () => "2";
+
+    const result = Peach.Array.intersperse(sepThunk, elem1Thunk, elem2Thunk)();
+
+    if (result.length !== 3) {
+      throw new Error(`Expected length 3, got ${result.length}`);
+    }
+
+    if (result[0] !== "1" || result[1] !== "|" || result[2] !== "2") {
+      throw new Error(`Expected ["1", "|", "2"], got [${result.join(", ")}]`);
+    }
+  },
+});
