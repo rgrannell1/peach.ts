@@ -26,19 +26,75 @@ export function K<T>(val: T): Thunk<T> {
   return () => val;
 }
 
+/**
+ * Array fuzzers.
+ *
+ * @namespace Array
+ */
 export * as Array from "./array/array.ts";
+
+/**
+ * Operations on fuzzers themselves
+ *
+ * @namespace Logic
+ */
 export * as Logic from "./logic/logic.ts";
+
+/**
+ * Number fuzzers
+ *
+ * @namespace Number
+ */
 export * as Number from "./number/number.ts";
+
+/**
+ * Set fuzzers
+ *
+ * @namespace Set
+ */
 export * as Set from "./set/set.ts";
+
+/**
+ * String fuzzers
+ *
+ * @namespace String
+ */
 export * as String from "./string/string.ts";
+
+/**
+ * Object fuzzers
+ *
+ * @namespace Object
+ */
 export * as Object from "./object/object.ts";
+
+/**
+ * Boolean fuzzers
+ *
+ * @namespace Boolean
+ */
 export * as Boolean from "./boolean/boolean.ts";
+
+/**
+ * BigInt fuzzers
+ *
+ * @namespace BigInt
+ */
 export * as BigInt from "./bigint/bigint.ts";
+
+/**
+ * Date fuzzers
+ *
+ * @namespace Date
+ */
 export * as Date from "./date/date.ts";
 
-
+/**
+ * Generator fuzzers
+ *
+ * @namespace Generator
+ */
 export * as Generator from "./generator/generator.ts";
 
 export type { Density, Thunk, Wrapped } from "./types.ts";
-
 export { unwrap } from "./types.ts";

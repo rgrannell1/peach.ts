@@ -32,7 +32,7 @@ export function from(
   };
 }
 
-/*
+/**
  * Construct a joined string from a separator and several wrapped substrings
  *
  * @param separator A wrapped string to use as a separator
