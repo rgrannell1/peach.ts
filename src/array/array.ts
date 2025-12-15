@@ -3,6 +3,11 @@ import { unwrap } from "../types.ts";
 
 /**
  * Construct an array from a wrapped element and wrapped array-length
+ *
+ * @param elem A wrapped value that represents the element to fill the array with
+ * @param size A wrapped value that represents the size of the array
+ *
+ * @returns A thunk that returns an array of the specified size, filled with the specified element
  */
 export function from<T>(elem: Wrapped<T>, size: Wrapped<number>): Thunk<T[]> {
   return (): T[] => {
@@ -26,11 +31,11 @@ export function from<T>(elem: Wrapped<T>, size: Wrapped<number>): Thunk<T[]> {
  */
 export function concat<T>(...elems: Wrapped<T>[]): Thunk<T[]> {
   return () => {
-    return elems.map((elem) => unwrap(elem));
+    return elems.map(unwrap);
   };
 }
 
-/*
+/**
  * Chain several fuzzers into a sequence, interspersing a separator between each element
  *
  * @param separator A fuzzer that produces the separator element
@@ -54,7 +59,7 @@ export function intersperse<T>(separator: Wrapped<T>, ...elems: Wrapped<T>[]): T
   };
 }
 
-/*
+/**
  * Given a list of fuzzers, and a density function, retrieve a subset of elements
  *
  * @param elems A list of fuzzers

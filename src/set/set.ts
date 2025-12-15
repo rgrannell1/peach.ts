@@ -27,7 +27,7 @@ export function from<T>(
   };
 }
 
-/*
+/**
  * Given a list of fuzzers, and a density function, retrieve a subset of elements
  *
  * @param elems A list of fuzzers

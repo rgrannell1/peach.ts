@@ -1,9 +1,17 @@
-// A zero-argument function that returns a value of type T
+/**
+ * A zero-argument function that returns a value of type T
+ *
+ */
 export type Thunk<T> = () => T;
 
-// A wrapped value is either:
-// - A value of type T
-// - A thunk that returns a value of type T
+/**
+ * A wrapped value is either:
+ * - A value of type T
+ * - A thunk that returns a value of type T
+ *
+ * This is the core type used throughout Peach to represent values. Thunks
+ * can be non-deterministic, allowing for random values to be returned.
+ */
 export type Wrapped<T> = T | Thunk<T>;
 
 /**

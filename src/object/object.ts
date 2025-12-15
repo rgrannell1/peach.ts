@@ -29,7 +29,7 @@ export function from<K extends Key, V>(
   };
 }
 
-/*
+/**
  * Given a object of keys: fuzzers, and a density function, retrieve a subset of elements
  *
  * @param elems A object of keys: fuzzers
@@ -40,7 +40,7 @@ export function from<K extends Key, V>(
 export function choose<K extends Key, V>(
   obj: Wrapped<Record<K, V>>,
   density: DensityBigInt,
-) {
+): Thunk<{ [k: string]: V }> {
   return () => {
     const concreteElems = Object.entries(unwrap(obj)) as [K, V][];
     const subsetCount = BigInt(2) ** BigInt(concreteElems.length);

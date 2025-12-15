@@ -1,10 +1,10 @@
-import type { Density } from "../types.ts";
+import type { Density, Thunk } from "../types.ts";
 import * as Logic from "../logic/logic.ts";
 
 /**
  * A fuzzer that always returns true
  */
-export function truth() {
+export function truth(): Thunk<boolean> {
   return (): boolean => {
     return true;
   };
@@ -13,7 +13,7 @@ export function truth() {
 /**
  * A fuzzer that always returns false
  */
-export function falsity() {
+export function falsity(): Thunk<boolean> {
   return (): boolean => {
     return false;
   };
@@ -24,7 +24,7 @@ export function falsity() {
  *
  * @param density A discrete density function that determines the probability of a particular element being chosen
  */
-export function oneOf(density: Density) {
+export function oneOf(density: Density): Thunk<boolean> {
   return (): boolean => {
     return Logic.oneOf(density, [true, false])();
   };

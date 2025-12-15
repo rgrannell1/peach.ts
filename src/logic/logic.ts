@@ -9,7 +9,7 @@ import { unwrap } from "../types.ts";
  *
  * @returns A generator function that returns a random element from an array-fuzzer
  */
-export function oneOf<T>(density: Density, elems: Wrapped<(Wrapped<T>)[]>) {
+export function oneOf<T>(density: Density, elems: Wrapped<(Wrapped<T>)[]>): Thunk<T> {
   return (): T => {
     const data = unwrap(elems);
     const idx = unwrap(density(0, data.length));
@@ -30,11 +30,9 @@ export function oneOf<T>(density: Density, elems: Wrapped<(Wrapped<T>)[]>) {
  *
  * @returns A generator function that returns a random element from an array-fuzzer
  */
-export function allOf<T>(elems: Wrapped<Wrapped<T>[]>) {
+export function allOf<T>(elems: Wrapped<Wrapped<T>[]>) : Thunk<T[]> {
   return (): T[] => {
-    const data = unwrap(elems);
-
-    return data.map((elem) => unwrap(elem));
+    return unwrap(elems).map(unwrap);
   };
 }
 
@@ -49,9 +47,9 @@ export function allOf<T>(elems: Wrapped<Wrapped<T>[]>) {
 export function oneOfKey<K extends string | number | symbol, V>(
   density: Density,
   elems: Wrapped<Record<K, V>>,
-) {
+): Thunk<string> {
   return () => {
-    const data = Object.keys(unwrap(elems));
+    const data: string[] = Object.keys(unwrap(elems));
     const idx = unwrap(density(0, data.length));
 
     if (data.length === 0) {
@@ -73,9 +71,9 @@ export function oneOfKey<K extends string | number | symbol, V>(
 export function oneOfValue<K extends string | number | symbol, V>(
   density: Density,
   elems: Wrapped<Record<K, V>>,
-) {
+): Thunk<V> {
   return () => {
-    const data = Object.values(unwrap(elems));
+    const data: V[] = Object.values(unwrap(elems));
     const idx = unwrap(density(0, data.length));
 
     if (data.length === 0) {
@@ -86,7 +84,7 @@ export function oneOfValue<K extends string | number | symbol, V>(
   };
 }
 
-/*
+/**
  * Return a fuzzer that returns transformed values extracted from another fuzzer
  *
  * @param fn A function that transforms a value
@@ -97,9 +95,9 @@ export function oneOfValue<K extends string | number | symbol, V>(
 export function oneOfEntry<K extends string | number | symbol, V>(
   density: Density,
   elems: Wrapped<Record<K, V>>,
-) {
+): Thunk<[string, V]> {
   return () => {
-    const data = Object.entries(unwrap(elems));
+    const data: [string, V][] = Object.entries(unwrap(elems));
     const idx = unwrap(density(0, data.length));
 
     if (data.length === 0) {
@@ -110,7 +108,7 @@ export function oneOfEntry<K extends string | number | symbol, V>(
   };
 }
 
-/*
+/**
  * Transform a fuzzer using a function
  *
  * @param fn A transformation function to be applied
@@ -124,7 +122,7 @@ export function mapped<A, B>(fn: (a: A) => B, gen: Wrapped<A>): Thunk<B> {
   };
 }
 
-/*
+/**
  * Return a fuzzer that returns values matching a predicate
  *
  * @param pred A predicate function
@@ -137,6 +135,7 @@ export function filtered<T>(
   gen: Wrapped<T>,
 ): Thunk<T> {
   return () => {
+    // unbounded loop; this is dangerous if the predicate is too strict
     while (true) {
       const val = unwrap(gen);
       if (pred(val)) {

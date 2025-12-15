@@ -66,7 +66,14 @@
   />
 </svg>
 </a>
-</div><div><div class="space-y-7" id=""><section class="section" id="type-parameters">
+</div><div><div class="space-y-7" id=""><div class="markdown"><p>A wrapped value is either:</p>
+<ul>
+<li>A value of type T</li>
+<li>A thunk that returns a value of type T</li>
+</ul>
+<p>This is the core type used throughout Peach to represent values. Thunks
+can be non-deterministic, allowing for random values to be returned.</p>
+</div><section class="section" id="type-parameters">
   <div>
 	  <h2 class="anchorable mb-1"><a href="#type-parameters" class="anchor" aria-label="Anchor" tabIndex="-1"><svg
   width="16"

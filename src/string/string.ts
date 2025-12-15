@@ -44,7 +44,7 @@ export function from(
 export function join(
   separator: Wrapped<string>,
   ...elems: Wrapped<string>[]
-) {
+): Thunk<string> {
   return (): string => {
     const sep = unwrap(separator);
     const parts: string[] = elems.map((elem) => unwrap(elem));
@@ -60,7 +60,7 @@ export function join(
  *
  * @returns A thunk that returns a random digit
  */
-export function digit(density: Density) {
+export function digit(density: Density): Thunk<string> {
   return (): string => {
     return `${unwrap(density(0, 10))}`;
   };
@@ -73,7 +73,7 @@ export function digit(density: Density) {
  *
  * @returns A thunk that returns a random non-zero digit
  */
-export function nonZeroDigit(density: Density) {
+export function nonZeroDigit(density: Density): Thunk<string> {
   return (): string => {
     return `${unwrap(density(1, 10))}`;
   };
@@ -82,14 +82,14 @@ export function nonZeroDigit(density: Density) {
 /**
  * A fuzzer that always returns the unix newline
  */
-export function unixNewline() {
+export function unixNewline(): Thunk<string> {
   return () => `\n`;
 }
 
 /**
  * A fuzzer that always returns the windows newline
  */
-export function windowsNewline() {
+export function windowsNewline(): Thunk<string> {
   return () => `\r\n`;
 }
 
@@ -229,7 +229,7 @@ function unicodeCategory(category: string) {
  *
  * @returns A thunk that returns a random unicode character
  */
-export function unicode(density: Density) {
+export function unicode(density: Density): Thunk<string> {
   return () => {
     const codePoint = unwrap(density(0x0, 0x10FFFF));
 
