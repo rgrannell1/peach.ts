@@ -20,23 +20,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Install Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: 2.x
-      
+
       - name: Generate documentation
         run: bash ./bs/docs.sh
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './docs'
-  
+
   deploy:
     environment:
       name: github-pages
